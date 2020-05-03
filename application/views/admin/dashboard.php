@@ -161,7 +161,10 @@
           <div class="card-body">
             <div class="table-responsive">
                 <?= $this->session->flashdata('message'); ?>
-              <a href="<?= base_url('akunadmin'); ?>" class="btn btn-success mb-3"><i class="fa fa-user-plus mr-2"></i>Tambah Akun Admin</a>
+              <a href="<?= base_url('akunadmin'); ?>" class="btn btn-success mb-3">
+                <i class="fa fa-user-plus mr-2"></i>
+                Tambah Akun Admin
+              </a>
               <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
