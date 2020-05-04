@@ -19,11 +19,4 @@ function is_not_user()
 		redirect('dashboard');
 	}
 }
-function session_detail_pembayaran()
-{
-	$ci = get_instance();
-	if ($ci->uri->segment(1) != 'detail_pembayaran') {
-		$ci->session->unset_userdata('tgl');
-		$ci->session->unset_userdata('jml');
-	}
-}
+
