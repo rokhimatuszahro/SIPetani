@@ -35,6 +35,8 @@ class User_model extends CI_Model {
             'pin' => $data['pin'],
             'jenkel' => $data['jeniskelamin']
         ];
+        if ($data['password']) {
+            $this->db->set('password', password_hash($data['password'], PASSWORD_DEFAULT));
         }elseif ($upload_img) {
             $config['upload_path'] = './assets/img/profile/';
             $config['allowed_types'] = 'gif|jpg|png';
