@@ -28,5 +28,13 @@ class User_model extends CI_Model {
         $this->db->insert('users', $datainsert);
     }
 
+    public function updatePasswordUserByEmail($email,$password)
+    {
+        $this->db->set('password', $password);
+        $this->db->where('email', $email);
+        $this->db->update('users');
+    }
+
+    
 
 }
