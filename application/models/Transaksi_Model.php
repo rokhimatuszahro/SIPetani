@@ -17,10 +17,14 @@ class Transaksi_model extends CI_Controller {
         return $this->db->get('pemesanan');
     }
 
+
+
     public function getHarga()
     {
         return $this->db->get('harga');
     }
+
+
 
     public function getPengunjungLimit($limit)
     {
@@ -28,6 +32,8 @@ class Transaksi_model extends CI_Controller {
         $this->db->limit($limit);
         return $this->db->get('pengunjung');
     }
+
+
 
     public function getDataRekap($waktu, $waktu_pemesanan)
     {
@@ -46,6 +52,28 @@ class Transaksi_model extends CI_Controller {
         $this->db->where('MONTH(tanggal_pemesanan)', $bulan);
         $this->db->where('YEAR(tanggal_pemesanan)', $tahun);
         return $this->db->get();
+    }
 
+    public function getKonfirmasi()
+    {
+        $this->db->select('*');
+        $this->db->from('pemesanan');
+        $this->db->join('users', 'users.id_user pemesanan.id_user');
+        $this->db->where('pemesanan.bukti_pembayaran !=', 0);
+        $this->db->order_by('id_pemesanan', 'DESC');
+        return $this->db->get();
+    }
+
+    public function updateKonfirmasi($id,$status)
+    {
+        if ($id == 'all') {
+            $this->db->set('status_pembayaran', $status);
+            $this->db->where('bukti_pembayaran !=', 0);
+            $this->db->update('pemesanan');
+        }else{
+            $this->db->set('status_pembayaran', $status);
+            $this->db->where('id_pemesanan', $id);
+            $this->db->update('pemesanan');
+        }
     }
 }

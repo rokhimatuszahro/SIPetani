@@ -12,6 +12,11 @@ class User_model extends CI_Model {
         return $this->db->get('users');
     }
 
+    public function deleteUserById($id)
+    {
+        $this->db->delete('users', ['id_user' => $id]);
+    }
+
     public function setRegistrasiAdmin($data)
     {
         $datainsert = [
