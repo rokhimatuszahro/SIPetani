@@ -76,4 +76,15 @@ class Transaksi_model extends CI_Controller {
             $this->db->update('pemesanan');
         }
     }
+
+    //landing_home
+    public function getPemesananStatusbayar($data,$statusbayar)
+	{
+		$this->db->select('*');
+		$this->db->from('pemesanan');
+		$this->db->join('users', 'users.id_user = pemesanan.id_user');
+		$this->db->where('email', $data);
+		$this->db->where('pemesanan.status_pembayaran', $statusbayar);
+		return $this->db->get();
+	}
 }
