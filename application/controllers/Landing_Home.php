@@ -84,5 +84,5 @@ class Landing_Home extends CI_Controller {
 		}
 	}
 
-
+}
 	
