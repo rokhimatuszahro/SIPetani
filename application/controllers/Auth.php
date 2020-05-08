@@ -65,17 +65,6 @@ class Auth extends CI_Controller {
         }
     }
 
-    public function logout()
-	{
-		$this->User_model->updateUserOffline($this->session->userdata('id_user'));
-		$this->session->unset_userdata('email');
-		$this->session->unset_userdata('id_user');
-		$this->session->unset_userdata('id_akses');
-       	$this->session->set_flashdata('message','<div class="alert alert-primary-bs small">Anda berhasil<strong> Logout!</strong></div>');
-       	redirect('login');
-	}
-
-
     public function registration()
     {
         is_login();
@@ -329,6 +318,15 @@ class Auth extends CI_Controller {
         }
     }
 
+    public function logout()
+    {
+        $this->User_model->updateUserOffline($this->session->userdata('id_user'));
+        $this->session->unset_userdata('email');
+        $this->session->unset_userdata('id_user');
+        $this->session->unset_userdata('id_akses');
+        $this->session->set_flashdata('message','<div class="alert alert-primary-bs small">Anda berhasil<strong> Logout!</strong></div>');
+        redirect('login');
+    }
 
 
 }
