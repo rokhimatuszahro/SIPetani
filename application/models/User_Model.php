@@ -2,15 +2,76 @@
 
 class User_model extends CI_Model {
 
+    
     public function getUserByEmail($data)
     {
          return $query = $this->db->get_where('users', ['email' => $data]);
     }
 
+    public function updateUserOnline($id)
+    {
+        $this->db->set('status_login', 1);
+        $this->db->where('id_user', $id);
+        $this->db->update('users');
+    }
+
+    public function updateUserOffline($id)
+    {
+        $this->db->set('status_login', 0);
+        $this->db->where('id_user', $id);
+        $this->db->update('users');
+    }
+
+    public function setRegistrasi($data)
+    {
+    	$datainsert = [
+    		'nama' => htmlspecialchars($data['username'],true),
+    		'jenkel' => $data['jeniskelamin'],
+    		'email' => htmlspecialchars($data['email'],true),
+    		'password' => password_hash($data['password'], PASSWORD_DEFAULT),
+    		'pin' => htmlspecialchars($data['pin'],true),
+    		'id_akses' => 1,
+    		'foto' => 'default.jpg',
+    		'status_login' => 0,
+    		'status' => 0
+    	];
+    	$this->db->insert('users',$datainsert);
+    }
+
+    public function setUserToken($data)
+    {
+        $this->db->insert('users_token',$data);
+    }
+
+    public function deleteUserToken($data)
+    {
+        $this->db->delete('users_token', ['token' => $data]);
+    }
+
+    public function getUserToken($data)
+    {
+        return $this->db->get_where('users_token', ['token' => $data]);
+    }
+
+    public function deleteUserByEmail($data)
+    {
+        $this->db->delete('users', ['email' => $data]);
+    }
+
+    public function updateUserByEmail($data)
+    {
+        $this->db->set('status', 1);
+        $this->db->where('email', $data);
+        $this->db->update('users');
+    }
+
+
     public function getUser()
     {
         return $this->db->get('users');
     }
+
+    
 
     public function deleteUserById($id)
     {
