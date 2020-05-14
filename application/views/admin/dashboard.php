@@ -185,7 +185,7 @@
                   <?php foreach ($users as $datauser) :?>
                   <tr>
                     <td><?= $n; ?></td>
-                    <td><?= $data["nama"]; ?></td>
+                    <td><?= $datauser["nama"]; ?></td>
                     <td><img src="<?= base_url('assets/img/profile/'); ?><?= $datauser["foto"]; ?>" class="rounded-circle" height="40" width="40"></td>
                     <td><?= $datauser["jenkel"]; ?></td>
                     <td><?= $datauser["email"]; ?></td>

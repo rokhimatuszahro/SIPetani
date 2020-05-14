@@ -5,11 +5,11 @@
       <div class="card-header">Tambah Akun Admin</div>
         <div class="card-body">
 
-          <form method="POST" action="<? base_url('akunadmin'); ?>">
+          <form method="POST" action="<?= base_url('akunadmin'); ?>">
 
             <div class="form-group">
               <label for="nama">Nama</label>
-              <input type="text" class="form-control rounded-pill" id="nama" name="nama" value="<? set_value('nama'); ?>">
+              <input type="text" class="form-control rounded-pill" id="nama" name="nama" value="<?= set_value('nama'); ?>">
               <?= form_error('nama', '<p class="text-danger small ml-2">','</p>'); ?>
             </div>
 

@@ -1,6 +1,6 @@
 <?php
 
-class Transaksi_model extends CI_Controller {
+class Transaksi_model extends CI_Model {
 
     // Admin
     public function getCekPemesanan($statusbayar, $buktibayar)
@@ -58,7 +58,7 @@ class Transaksi_model extends CI_Controller {
     {
         $this->db->select('*');
         $this->db->from('pemesanan');
-        $this->db->join('users', 'users.id_user pemesanan.id_user');
+        $this->db->join('users', 'users.id_user = pemesanan.id_user');
         $this->db->where('pemesanan.bukti_pembayaran !=', 0);
         $this->db->order_by('id_pemesanan', 'DESC');
         return $this->db->get();

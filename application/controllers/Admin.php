@@ -35,14 +35,14 @@ class Admin extends CI_Controller {
 
         // Data Rekap
         $data['data_rekap_harian'] = $this->Transaksi_model->getDataRekap($hari,'tanggal_pemesanan')->row_array();
-        $data['data_rekapa_bulanan'] = $this->Transaksi_model->getDataRekap($bulan, 'tanggal_pemesanan')->row_array();
+        $data['data_rekap_bulanan'] = $this->Transaksi_model->getDataRekap($bulan, 'tanggal_pemesanan')->row_array();
         $data['data_rekap_tahunan'] = $this->Transaksi_model->getDataRekap($tahun, 'tanggal_pemesanan')->row_array();
 
         // Array Chart Tahunan
         $arr_chart = [];
 
         // Menjumlahkan pemasukan setiap bulannya dalam tahun saat ini adalah dimana hasil setiap bulannya akan dimasukkan ke dalam array chart
-        for($i;$i<=12;$i++){
+        for ($i=1;$i<=12;$i++){
             $query_chart = $this->Transaksi_model->getChart($i,$tahun)->result_array();
 
             foreach ($query_chart as $row) {
@@ -59,10 +59,10 @@ class Admin extends CI_Controller {
         // Data Chart
         $data['chart'] = $arr_chart;
 
-        $this->load->view('template/v_header_admin', $data);
-        $this->load->view('template/v_navbar_admin', $data);
+        $this->load->view('templates/v_header_admin', $data);
+        $this->load->view('templates/v_navbar_admin', $data);
         $this->load->view('admin/dashboard', $data);
-        $data->load->view('template/v_footer_admin', $data);
+        $this->load->view('templates/v_footer_admin', $data);
     }
 
     public function hapusUser($id)
@@ -95,9 +95,9 @@ class Admin extends CI_Controller {
             ]);
         if ($this->form_validation->run() == FALSE)
         {
-            $this->load->view('template/v_header_admin', $data);
+            $this->load->view('templates/v_header_admin', $data);
             $this->load->view('admin/akunadmin');
-            $this->load->view('template/v_footer_admin2', $data);
+            $this->load->view('templates/v_footer_admin2', $data);
         }else{
             $data = $this->input->post();
             $this->User_model->setRegistrasiAdmin($data);
@@ -129,10 +129,10 @@ class Admin extends CI_Controller {
         $this->form_validation->set_rules('password2', 'Password', 'trim|matches[password]');   
         if ($this->form_validation->run() == FALSE)
         {
-            $this->load->view('template/v_header_admin', $data);
-            $this->load->view('template/v_navbar_admin', $data);
+            $this->load->view('templates/v_header_admin', $data);
+            $this->load->view('templates/v_navbar_admin', $data);
             $this->load->view('admin/profileadmin', $data);
-            $this->load->view('template/v_footer_admin', $data);
+            $this->load->view('templates/v_footer_admin', $data);
         }else{
             $this->User_model->updateUserProfileByEmail($this->input->post(), $data['user']['foto']);
             $this->session->set_flashdata('message', '<div class="alert alert-primary small">Edit Profile<strong>Berhasil</strong></div>');
@@ -149,10 +149,10 @@ class Admin extends CI_Controller {
         $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
         $data['pemesanan'] = $this->Transaksi_model->getPemesanan()->result_array();
 
-        $this->load->view('template/v_header_admin', $data);
-        $this->load->view('template/v_navbar_admin', $data);
+        $this->load->view('templates/v_header_admin', $data);
+        $this->load->view('templates/v_navbar_admin', $data);
         $this->load->view('admin/pemesanan', $data);
-        $this->load->view('template/v_footer_admin', $data);
+        $this->load->view('templates/v_footer_admin', $data);
     }
 
 
@@ -164,10 +164,10 @@ class Admin extends CI_Controller {
         $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
         $data['konfirmasi'] = $this->Transaksi_model->getKonfirmasi()->result_array();
 
-        $this->load->view('template/v_header_admin', $data);
-        $this->load->view('template/v_navbar_admin', $data);
+        $this->load->view('templates/v_header_admin', $data);
+        $this->load->view('templates/v_navbar_admin', $data);
         $this->load->view('admin/konfirmasi', $data);
-        $this->load->view('template/v_footer_admin', $data);
+        $this->load->view('templates/v_footer_admin', $data);
     }
 
     public function validasiKonfirmasi($id,$status)

@@ -23,13 +23,13 @@
     <ul class="navbar-nav ml-auto ml-md-0">
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img class="rounded-circle" src="<?= base_url('assets/img/profile/'.$user['foto'].''); ?><?= $data['foto']; ?>" height="40" width="40">
+          <img class="rounded-circle" src="<?= base_url('assets/img/profile/'.$user['foto'].''); ?>" height="40" width="40">
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
           <div class="dropdown-header">
             <p>Selamat datang</p>
             <?php if ($user['status'] == 1): ?>
-                <span><small><i class="fas fa-fw fa-circle text-succes" style="font-size: 10px;"></i><?= $user['nama']; ?></small></span>
+                <span><small><i class="fas fa-fw fa-circle text-success" style="font-size: 10px;"></i><?= $user['nama']; ?></small></span>
             <?php endif ?>
           </div>
           <a class="dropdown-item" href="<?= base_url('profileadmin'); ?>">Profil</a>
