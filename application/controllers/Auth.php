@@ -145,7 +145,7 @@ class Auth extends CI_Controller {
 
         $user = $this->User_model->getUserByEmail($email)->row_array();
         if ($user) {
-            $user_token = $this->User_model->getUserToken($token);
+            $user_token = $this->User_model->getUserToken($token)->row_array();
             if (!$user['status'] == 1) {
                 if ($user_token) {
                     if (time() - $user_token['waktu_buat'] < (60*60*24)) {
