@@ -21,8 +21,8 @@ class Landing_Home extends CI_Controller {
 	public function index()
 	{
 		$data['judul'] = 'SIPetani';
-		$data['harga'] = $this->User_model->getHarga()->result_array();
-		$data['pengunjung'] = $this->User_model->getPengunjungInfo()->result_array();
+		$data['harga'] = $this->Transaksi_model->getHarga()->result_array();
+		$data['pengunjung'] = $this->Transaksi_model->getPengunjungLimit(1)->result_array();
 
 		if (session()) {
 			$data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
