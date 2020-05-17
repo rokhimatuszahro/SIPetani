@@ -6,18 +6,19 @@ class Admin extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-        is_not_login();
-
-        if (session()) {
-            // Cek apakah dia Admin?
-            is_not_admin();
+        is_not_login();     // Cek apakah user sudah login, coding di helpers/akses_helper.php
+        if (session()) {    // apakah ada session('email'), coding di helpers/akses_helper.php
+            is_not_admin(); // Cek apakah user adalah admin, coding di helpers/akses_helper.php
         }
     }
 
+    
+    // Dashboard
     public function dashboard()
     {
-
+        // Data berupa array dengan key dan value/nilai untuk parsing data ke view
         $data['judul'] = 'SIPetani Dashboard';
+        // Output/hasil model dengan 1 data : row_array(), lebih 1 data : result_array(), jumlah data : num_rows()
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
         $data['users'] = $this->User_model->getUser()->result_array();
         $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
@@ -25,118 +26,142 @@ class Admin extends CI_Controller {
         $data['harga'] = $this->Transaksi_model->getHarga()->num_rows();
         $data['pengunjung'] = $this->Transaksi_model->getPengunjungLimit(1)->row_array();
 
-        // Data Rekap Chart
-        $hari = date('Y-m-d');
-        $bulan = date('m');
-        $tahun = date('Y');
 
-        date_default_timezone_set('Asia/Jakarta');
-        $data['waktu'] = $waktu = date('h : i A');
+        // Proses Rekap data Chart
+        $hari = date('Y-m-d');  // variable dengan fungsi yg menampung data info tanggal hari ini
+        $bulan = date('m');     // variable dengan fungsi yg menampung data bulan saat ini
+        $tahun = date('Y');     // variable dengan fungsi yg menampung data tahun saat ini
 
-        // Data Rekap
+        date_default_timezone_set('Asia/Jakarta'); // set waktu dan tgl default dengan zona asia/jakarta
+        $data['waktu'] = $waktu = date('h : i A'); // Menyimpan data jam, menit dan detik saat ini pada data array
+
+        // Menyimpan Data Rekap harian, bulanan, dan tahunan pada data array untuk parsing data ke view
         $data['data_rekap_harian'] = $this->Transaksi_model->getDataRekap($hari,'tanggal_pemesanan')->row_array();
         $data['data_rekap_bulanan'] = $this->Transaksi_model->getDataRekap($bulan, 'tanggal_pemesanan')->row_array();
         $data['data_rekap_tahunan'] = $this->Transaksi_model->getDataRekap($tahun, 'tanggal_pemesanan')->row_array();
 
-        // Array Chart Tahunan
+        // Array Chart Tahunan yg menampung data total transaksi bulanan
         $arr_chart = [];
 
-        // Menjumlahkan pemasukan setiap bulannya dalam tahun saat ini adalah dimana hasil setiap bulannya akan dimasukkan ke dalam array chart
+        // Menjumlahkan pemasukan setiap bulannya pada tahun saat ini dimana hasil setiap bulannya akan dimasukkan ke dalam array chart tahunan
         for ($i=1;$i<=12;$i++){
             $query_chart = $this->Transaksi_model->getChart($i,$tahun)->result_array();
 
             foreach ($query_chart as $row) {
-                // Jika hasil pada bulan ke $i=0 maka akan memasukkan nilai 0 pada array chart
+                // Jika hasil pada bulan ke $i=0 maka total pemasukan pada bulan itu 0
                 if($row['hasil'] === NULL || $row['hasil'] === 0){
-                    array_push($arr_chart, 0);
+                    array_push($arr_chart, 0);              // fungsi memasukkan nilai kedalam array chart tahunan 
 
-                // Selain itu akan memasukkan nilai dari hasil ke dalam array chart
+                    // Selain itu akan memasukkan nilai dari hasil ke dalam array chart
                 }else{
-                    array_push($arr_chart, $row['hasil']);
+                    array_push($arr_chart, $row['hasil']);  // fungsi memasukkan nilai kedalam array chart tahunan
                 }
             }
         }
-        // Data Chart
-        $data['chart'] = $arr_chart;
+        $data['chart'] = $arr_chart; // Data chart array tahunan ditampung dalam data array untuk parsing data ke view
 
+        // Load view dengan mengirimkan data array yang sudah disiapkan sebelumnya
         $this->load->view('templates/v_header_admin', $data);
         $this->load->view('templates/v_navbar_admin', $data);
         $this->load->view('admin/dashboard', $data);
         $this->load->view('templates/v_footer_admin', $data);
     }
 
+
+    // Hapus akun
     public function hapusUser($id)
     {
-        $this->User_model->deleteUserById($id);
+        $this->User_model->deleteUserById($id); // Model menghapus data berdasarkan UserID dimana id didapat dri paramenter url
+        
+        // set pesan flash ketika pesan berhasil dihapus yg nantinya akan ditampilkan di view berdasarkan key flashdata yg sudah dibuat
         $this->session->set_flashdata('message', '<div class="alert alert-success role="alert">Data Berhasil Dihapus</div>');
-        redirect('dashboard');
+        redirect('dashboard');  // Mengarahkan keadaan saat ini ke method dashboard
     }
 
+
+    // Akun admin
     public function akunAdmin()
     {
+        // Data berupa array dengan key dan value/nilai untuk parsing data ke view
         $data['judul'] = 'SIPetani Akun Admin';
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
         $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
 
+        // rule/aturan untuk form validasi dengan parameter (name_pada inputan form post, string, rule/aturan)
         $this->form_validation->set_rules('nama', 'Nama', 'trim|required',[
-                'required' => 'Data %s kosong harap isi data!'
+                'required' => 'Data %s kosong harap isi data!'  // keluaran error yg diinginkan berdasarkan aturan, %s mewakilkan parameter String
             ]);
         $this->form_validation->set_rules('email', 'Email', 'trim|required',[
-                'required' => 'Data %s kosong harap isi data!',
-                'valid_email' => 'Format %s salah'
+                'required' => 'Data %s kosong harap isi data!', // keluaran error inputan tidak boleh kosong
+                'valid_email' => 'Format %s salah'              // keluaran error inputan harus email
             ]);
         $this->form_validation->set_rules('password', 'Password', 'trim|required',[
-                'required' => 'Data %s kosong harap isi data!'
+                'required' => 'Data %s kosong harap isi data!'  // keluaran error inputan tidak boleh kosong
             ]);
         $this->form_validation->set_rules('pin', 'PIN', 'trim|required|exact_length[3]|numeric',[
-                'required' => 'Data %s kosong harap isi data!',
-                'exact_length' => 'Data %s 3 digit',
-                'numeric' => 'Format %s salah'
+                'required' => 'Data %s kosong harap isi data!', // keluaran error inputan tidak boleh kosong
+                'exact_length' => 'Data %s 3 digit',            // keluaran error inputan harus 3 digit
+                'numeric' => 'Format %s salah'                  // keluaran error inputan harus nomor
             ]);
+        
+        // Jika inputan pada form disubmit dan tidak memenuhi rule maka akan meload view kembali dan mengirimkan error berdasarkan rule yg error
         if ($this->form_validation->run() == FALSE)
         {
+            // Load view dengan mengirimkan data array yang sudah disiapkan sebelumnya
             $this->load->view('templates/v_header_admin', $data);
             $this->load->view('admin/akunadmin');
             $this->load->view('templates/v_footer_admin2', $data);
+        // Jika sudah memenuhi rule maka akan dilakukan proses selanjutnya 
         }else{
-            $data = $this->input->post();
-            $this->User_model->setRegistrasiAdmin($data);
+            $data = $this->input->post();                   // Menampung semua inputan dari form dengan metode post
+            $this->User_model->setRegistrasiAdmin($data);   // Insert data registrasi user
 
+            // set pesan flash ketika pesan berhasil dihapus yg nantinya akan ditampilkan di view berdasarkan key flashdata yg sudah dibuat
             $this->session->set_flashdata('message', '<div class="alert alert-success role="alert">Data Berhasil Ditambahkan</div>');
-            redirect('dashboard');
+            redirect('dashboard'); // Mengarahkan keadaan saat ini ke method dashboard
         }   
     }
 
+
+    // Profile admin
     public function profileAdmin()
     {
+        // Data berupa array dengan key dan value/nilai untuk parsing data ke view
         $data['judul'] = 'SIPetani Profile Admin';
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
         $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
 
+        // rule/aturan untuk form validasi dengan parameter (name_pada inputan form post, string, rule/aturan)
         $this->form_validation->set_rules('nama', 'Nama', 'trim|required',[
-                'required' => 'Data %s kosong harap isi data!'
+                'required' => 'Data %s kosong harap isi data!'  // keluaran error yg diinginkan berdasarkan aturan, %s mewakilkan parameter String
             ]);
         $this->form_validation->set_rules('pin', 'PIN', 'trim|required|exact_length[3]|numeric',[
-                'required' => 'Data %s kosong harap isi data!',
-                'exact_length' => 'Data %s 3 digit',
-                'numeric' => 'Format %s salah'
+                'required' => 'Data %s kosong harap isi data!', // keluaran error inputan tidak boleh kosong
+                'exact_length' => 'Data %s 3 digit',            // keluaran error inputan tidak boleh kosong
+                'numeric' => 'Format %s salah'                  // keluaran error inputan tidak boleh kosong
             ]);
          $this->form_validation->set_rules('password', 'Password', 'trim|min_length[4]|max_length[8]|matches[password2]',[
-                'min_length' => 'Data %s kurang dari 4 Char',
-                'max_length' => 'Data %s lebih dari 8 Char',
-                'matches' => 'Repeat %s tidak sama'
+                'min_length' => 'Data %s kurang dari 4 Char',   // keluaran error inputan tidak boleh kosong
+                'max_length' => 'Data %s lebih dari 8 Char',    // keluaran error inputan tidak boleh kosong
+                'matches' => 'Repeat %s tidak sama'             // keluaran error inputan tidak boleh kosong
             ]);
-        $this->form_validation->set_rules('password2', 'Password', 'trim|matches[password]');   
+        $this->form_validation->set_rules('password2', 'Password', 'trim|matches[password]');
+
+        // Jika inputan pada form disubmit dan tidak memenuhi rule maka akan meload view kembali dan mengirimkan error berdasarkan rule yg error
         if ($this->form_validation->run() == FALSE)
         {
+            // Load view dengan mengirimkan data array yang sudah disiapkan sebelumnya
             $this->load->view('templates/v_header_admin', $data);
             $this->load->view('templates/v_navbar_admin', $data);
             $this->load->view('admin/profileadmin', $data);
             $this->load->view('templates/v_footer_admin', $data);
+        // Jika sudah memenuhi rule maka akan dilakukan proses selanjutnya
         }else{
-            $this->User_model->updateUserProfileByEmail($this->input->post(), $data['user']['foto']);
+            $this->User_model->updateUserProfileByEmail($this->input->post(), $data['user']['foto']); // Update profil data dengan parameter data inputan dari form dengn post dan foto lama
+
+            // set pesan flash ketika pesan berhasil dihapus yg nantinya akan ditampilkan di view berdasarkan key flashdata yg sudah dibuat
             $this->session->set_flashdata('message', '<div class="alert alert-primary small">Edit Profile<strong>Berhasil</strong></div>');
-            redirect('profileadmin');
+            redirect('profileadmin'); // Mengarahkan keadaan saat ini ke method profileadmin
         }
     }
 
@@ -144,11 +169,13 @@ class Admin extends CI_Controller {
     // Pemesanan
     public function pemesanan()
     {
+        // Data berupa array dengan key dan value/nilai untuk parsing data ke view
         $data['judul'] = 'SIPetani Pemesanan';
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
         $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
         $data['pemesanan'] = $this->Transaksi_model->getPemesanan()->result_array();
 
+        // Load view dengan mengirimkan data array yang sudah disiapkan sebelumnya
         $this->load->view('templates/v_header_admin', $data);
         $this->load->view('templates/v_navbar_admin', $data);
         $this->load->view('admin/pemesanan', $data);
@@ -159,29 +186,45 @@ class Admin extends CI_Controller {
     // Konfirmasi
     public function konfirmasi()
     {
+        // Data berupa array dengan key dan value/nilai untuk parsing data ke view
         $data['judul'] = 'SIPetani Konfirmasi';
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
         $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
         $data['konfirmasi'] = $this->Transaksi_model->getKonfirmasi()->result_array();
 
+        // Load view dengan mengirimkan data array yang sudah disiapkan sebelumnya
         $this->load->view('templates/v_header_admin', $data);
         $this->load->view('templates/v_navbar_admin', $data);
         $this->load->view('admin/konfirmasi', $data);
         $this->load->view('templates/v_footer_admin', $data);
     }
 
+
+    // Validasi konfirmasi
     public function validasiKonfirmasi($id,$status)
     {
-        $this->Transaksi_model->updateKonfirmasi($id,$status);
+        $this->Transaksi_model->updateKonfirmasi($id,$status); // Update status pemesanan dengan menerima parameter id_transaksi dan status
+        
+        // Jika id_transaksi sama dengan 'all' 
         if ($id == 'all') {
+            
+            // set pesan flash ketika pesan berhasil dihapus yg nantinya akan ditampilkan di view berdasarkan key flashdata yg sudah dibuat
             $this->session->set_flashdata('message', '<div class="alert alert-success role="alert">Semua Data Berhasil Dikonfirmasi</div>');
-            redirect('konfirmasi');
+            redirect('konfirmasi'); // Mengarahkan keadaan saat ini ke method konfirmasi
+
+        // Jika status sama dengan 1
         }elseif ($status == 1) {
+
+            // set pesan flash ketika pesan berhasil dihapus yg nantinya akan ditampilkan di view berdasarkan key flashdata yg sudah dibuat
             $this->session->set_flashdata('message', '<div class="alert alert-success role="alert">Data Berhasil Dikonfirmasi</div>');
-            redirect('konfirmasi');
+            redirect('konfirmasi'); // Mengarahkan keadaan saat ini ke method konfirmasi
+        
+        // Jika tidak maka akan dilakukan proses dibawah
         }else {
+
+            // set pesan flash ketika pesan berhasil dihapus yg nantinya akan ditampilkan di view berdasarkan key flashdata yg sudah dibuat
             $this->session->set_flashdata('message', '<div class="alert alert-success role="alert">Konfirmasi Data Berhasil Dibatalkan</div>');
-            redirect('konfirmasi');
+            redirect('konfirmasi'); // Mengarahkan keadaan saat ini ke method konfirmasi
         }
     }
 

@@ -3,7 +3,7 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="<?= base_url('dashboard'); ?>">Dashboard</a>
+            <a href="<?= base_url('dashboard'); ?>">Dashboard</a> <!-- mengarahkan keadaan saat ini ke dashboard -->
           </li>
           <li class="breadcrumb-item active">Konfirmasi</li>
         </ol>
@@ -31,32 +31,45 @@
                 </thead>
                 <tbody>
                   <?php $n = 1; ?>
-                  <?php foreach ($konfirmasi as $data) :?>
+                  <?php foreach ($konfirmasi as $data) :?>  <!-- looping data pada array data dengan key konfirmasi yg sudah dibuat di controller -->
                   <tr>
                     <td><?= $n; ?></td>
-                    <td><?= $data["id_pemesanan"]; ?></td>
-                    <td><?= $data["nama_pemesan"]; ?></td>
-                    <td>Rp. <?= number_format($data["total_pembayaran"],0,',','.'); ?></td>
+                    <td><?= $data["id_pemesanan"]; ?></td> <!-- data id_pemesaan -->
+                    <td><?= $data["nama_pemesan"]; ?></td> <!-- data nama_pemesaan -->
+                    <td>Rp. <?= number_format($data["total_pembayaran"],0,',','.'); ?></td> <!-- data total biaya yg diformat menjadi nilai mata uang -->
                     <td>
+                      <!-- Jika tidak upload bukti pembayaran / == null makan akan  -->
                       <?php if ($data['bukti_pembayaran'] == NULL ): ?>
                           <i class="btn btn-sm btn-danger fas fa-eye-slash rounded-circle"></i>
+                      
+                      <!-- jika tidak makan akan lanjut ke proses berikutnya  -->
                       <?php else: ?>
+                      <!-- memanggil data gambar dengan base_url() -->
                       <a class="btn btn-sm btn-success rounded-circle" target="_BLANK" href="<?= base_url('assets/img/bukti_pembayaran/'); ?><?= $data['bukti_pembayaran']; ?>"><i class="fas fa-eye"></i></a>
                       <?php endif ?>
                     </td>
                     <td class="text-center">
+                    
+                        <!-- mengirim parameter id_pemesanan dan int 1 jika ingin mengkonfirmasi, ke method validasikonfirmasi -->
                         <a href="<?= base_url('admin/validasikonfirmasi/'); ?><?= $data["id_pemesanan"]; ?>/1" class="btn btn-sm btn-primary rounded-circle" onclick ="return confirm('Anda Yakin Ingin Mengkonfirmasi?');">
                           <i class="fa fa-check"></i>
                         </a>
+
+                        <!-- mengirim parameter id_pemesanan dan int 0 jika ingin membatalkan konfirmasi, ke method validasikonfirmasi -->
                         <a href="<?= base_url('admin/validasikonfirmasi/'); ?><?= $data["id_pemesanan"]; ?>/0" class="btn btn-sm btn-danger rounded-circle">
                           <i class="fa fa-times"></i>
                         </a>
                     </td>
-                    <td><?php if ($data["status_pembayaran"] == 1): ?>
+                    <td>
+                    <!-- Jika status pembayaran 1 maka lunas -->
+                      <?php if ($data["status_pembayaran"] == 1): ?>
                         <small><label class="p-2 badge badge-success rounded-pill">Lunas</label></small>
+                    
+                    <!-- Selain itu maka tidak lunas -->
                       <?php else: ?>
                         <small><label class="p-2 badge badge-danger rounded-pill">Lunas</label></small>
-                      <?php endif ?></td>
+                      <?php endif ?>
+                    </td>
                   </tr>
                   <?php $n++; ?>
                   <?php endforeach; ?>

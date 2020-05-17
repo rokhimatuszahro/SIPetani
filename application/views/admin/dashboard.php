@@ -3,7 +3,7 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="<?= base_url('dashboard'); ?>">Dashboard</a>
+            <a href="<?= base_url('dashboard'); ?>">Dashboard</a> <!-- mengarahkan keadaan saat ini ke dashboard -->
           </li>
           <li class="breadcrumb-item active">Lihat Semua</li>
         </ol>
@@ -17,8 +17,9 @@
                   <i class="fas fa-fw fa-ticket-alt"></i>
                 </div>
                 <div class="mr-5">Pemesanan</div>
-                <div class="mr-5"><?= $pemesanan; ?></div>
+                <div class="mr-5"><?= $pemesanan; ?></div> <!-- Menampilan total pemesanan -->
               </div>
+              <!-- Mengarahkan keadaan ke method pemesanan -->
               <a class="card-footer text-white clearfix small z-1" href="<?= base_url('pemesanan'); ?>">
                 <span class="float-left">Lihat Data</span>
                 <span class="float-right">
@@ -36,11 +37,12 @@
                 <div class="mr-5">Pengunjung</div>
                 <div class="mr-5">
                   <?=
-                    $pengunjung['jum_pengunjung'];
+                    $pengunjung['jum_pengunjung']; // Menampilkan jumlah pengunjung akhir - akhir ini
                   ?> 
                 </div>
-                <small><?= $pengunjung['tgl_pengunjung']; ?></small>
+                <small><?= $pengunjung['tgl_pengunjung']; ?></small> <!-- Menampilakn tanggal update pengunjung -->
               </div>
+              <!-- Mengarahkan keadaan ke method pengunjung -->
               <a class="card-footer text-white clearfix small z-1" href="<?= base_url('pengunjung'); ?>">
                 <span class="float-left">Lihat Data</span>
                 <span class="float-right">
@@ -56,8 +58,10 @@
                   <i class="fas fa-fw fa-dollar-sign"></i>
                 </div>
                 <div class="mr-5">Harga</div>
+                <!-- Menampilkan Jumlah event harga -->
                 <div class="mr-5"><?= $harga; ?> Event</div> 
               </div>
+              <!-- Mengarahkan keadaan ke method harga -->
               <a class="card-footer text-white clearfix small z-1" href="<?= base_url('harga'); ?>">
                 <span class="float-left">Lihat Data</span>
                 <span class="float-right">
@@ -73,8 +77,10 @@
                   <i class="fas fa-fw fa-check"></i>
                 </div>
                 <div class="mr-5">Konfirmasi</div>
+                <!-- Menampilkan jumlah pemesanan yg belum dikonfirmasi -->
                 <div class="mr-5"><?= $cek_pemesanan; ?> Pemesanan</div> 
               </div>
+              <!-- Mengarahkan keadaan ke method konfirmasi -->
               <a class="card-footer text-white clearfix small z-1" href="<?= base_url('konfirmasi'); ?>">
                 <span class="float-left">Lihat Data</span>
                 <span class="float-right">
@@ -93,6 +99,7 @@
                   <div class="card-body-icon">
                     <i class="fas fa-fw fa-cloud-sun"></i>
                   </div>
+                  <!-- Menampilkan Total penjualan harian pada hari sekarang -->
                   <div class="mr-5">Penjualan Harian <br> Rp. <?= number_format($data_rekap_harian['hasil'],0,',','.'); ?></div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="#">
@@ -109,6 +116,7 @@
                   <div class="card-body-icon">
                     <i class="fas fa-fw fa-money-check-alt"></i>
                   </div>
+                  <!-- Menampilkan Total penjualan bulanan pada bulan sekarang -->
                   <div class="mr-5">Penjualan Bulanan <br> Rp. <?= number_format($data_rekap_bulanan['hasil'],0,',','.'); ?></div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="#">
@@ -125,6 +133,7 @@
                   <div class="card-body-icon">
                     <i class="fas fa-fw fa-balance-scale-right"></i>
                   </div>
+                  <!-- Menampilkan Total penjualan tahun pada tahun sekarang -->
                   <div class="mr-5">Penjualan Tahunan <br> Rp. <?= number_format($data_rekap_tahunan['hasil'],0,',','.'); ?></div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="#">
@@ -139,6 +148,7 @@
 
 
         <!-- Area Chart Example -->
+        <!-- Untuk isi data chart berada di v_footer_admin.php bagian bawah -->
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-chart-area"></i>
@@ -148,6 +158,7 @@
             <canvas id="myAreaChart" width="100%" height="30"></canvas>
           </div>
           <div class="card-footer small text-muted">
+            <!-- Menampilkan waktu update data -->
             Pembaruan <?= date('l d-M-Y'); ?> Pukul <?= $waktu; ?>
           </div>
         </div>
@@ -160,7 +171,11 @@
             Data Pengguna</div>
           <div class="card-body">
             <div class="table-responsive">
+
+                <!-- Menampilkan Flashdata yg dibuat dan dikirim dari controller -->
                 <?= $this->session->flashdata('message'); ?>
+
+              <!-- mengarahkan keadaan saat ini ke akunadmin -->
               <a href="<?= base_url('akunadmin'); ?>" class="btn btn-success mb-3">
                 <i class="fa fa-user-plus mr-2"></i>
                 Tambah Akun Admin
@@ -182,28 +197,33 @@
                 <tbody>
                   <!--untuk menampikan data pada tabel-->
                   <?php $n = 1; ?>
-                  <?php foreach ($users as $datauser) :?>
+                  <?php foreach ($users as $datauser) :?> <!-- looping data pada array data dengan key users yg sudah dibuat di controller -->
                   <tr>
                     <td><?= $n; ?></td>
-                    <td><?= $datauser["nama"]; ?></td>
+                    <td><?= $datauser["nama"]; ?></td>    <!-- Data nama -->
                     <td><img src="<?= base_url('assets/img/profile/'); ?><?= $datauser["foto"]; ?>" class="rounded-circle" height="40" width="40"></td>
-                    <td><?= $datauser["jenkel"]; ?></td>
-                    <td><?= $datauser["email"]; ?></td>
-                    <td><?= $datauser["pin"]; ?></td>
+                    <td><?= $datauser["jenkel"]; ?></td>  <!-- Data jenkel -->
+                    <td><?= $datauser["email"]; ?></td>   <!-- Data email -->
+                    <td><?= $datauser["pin"]; ?></td>     <!-- Data pin -->
                     <td>
+                      <!-- Jika id_akses 1 maka tampilak User -->
                       <?php if ($datauser["id_akses"] == 1): ?>
                         <small><label class="p-2 badge w-75 badge-success rounded-pill">User</label></small>
+                      <!-- Selain itu tampilkan Admin -->
                       <?php else: ?>
                         <small><label class="p-2 badge w-75 badge-primary rounded-pill">Admin</label></small>
                       <?php endif ?>  
                     </td>
                     <td>
+                      <!-- Jika status login 1 maka tampilkan online -->
                       <?php if ($datauser["status_login"] == 1): ?>
                         <small><label class="p-2 badge badge-success rounded-pill">Online</label></small>
+                      <!-- Selain itu tampilkan offline -->
                       <?php else: ?>
                         <small><label class="p-2 badge badge-danger rounded-pill">Offline</label></small>
                       <?php endif ?>
                     </td>
+                    <!-- mengarahkan keadaan saat ini ke admin/hapususer/parameter -->
                     <td class="text-center"><a href="<?= base_url('admin/hapususer/'); ?><?= $datauser['id_user']; ?>" onclick ="return confirm('Anda Yakin Ingin Menghapus Data Ini?');" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
                   </tr>
                   <?php $n++; ?>
