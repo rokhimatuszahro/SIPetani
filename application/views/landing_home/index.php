@@ -212,11 +212,11 @@
 		<section class="ftco-counter img ftco-section ftco-no-pt ftco-no-pb ftco-animate" id="tentang">
     	<div class="container">
     		<div class="row d-flex">
-    			<div class="col-md-6 col-lg-5 mt-4 d-flex" style="background-image:url(<?= base_url('assets/img/services/220171.png'); ?>);background-size:90%; background-repeat:no-repeat;">
+    			<div class="col-md-6 col-lg-5 mt-5 d-flex ftco-animate" style="background-image:url(<?= base_url('assets/img/services/220171.png'); ?>);background-size:90%; background-repeat:no-repeat;">
     				<div class="img d-flex" style="background-image:url(<?= base_url('assets/img/services/icon-guide.png'); ?>);background-size:100%; background-repeat:no-repeat;">
     				</div>
     			</div>
-    			<div class="col-md-6 col-lg-7 pl-lg-5 py-5 pb-5">
+    			<div class="col-md-6 col-lg-7 pl-lg-5 pb-5">
     				<div class="py-md-5">
 	    				<div class="row justify-content-start pb-3">
 			          <div class="col-md-12 heading-section ftco-animate">
