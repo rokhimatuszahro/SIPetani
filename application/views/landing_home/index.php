@@ -209,14 +209,14 @@
 		
 	<!-- Tentang -->
 
-		<section class="ftco-counter img ftco-section ftco-no-pt ftco-no-pb" id="tentang">
+		<section class="ftco-counter img ftco-section ftco-no-pt ftco-no-pb ftco-animate" id="tentang">
     	<div class="container">
     		<div class="row d-flex">
-    			<div class="col-md-6 col-lg-5 d-flex">
-    				<div class="img d-flex align-self-stretch align-items-center" style="background-image:url(images/about.jpg);">
+    			<div class="col-md-6 col-lg-5 mt-4 d-flex" style="background-image:url(<?= base_url('assets/img/services/220171.png'); ?>);background-size:90%; background-repeat:no-repeat;">
+    				<div class="img d-flex" style="background-image:url(<?= base_url('assets/img/services/icon-guide.png'); ?>);background-size:100%; background-repeat:no-repeat;">
     				</div>
     			</div>
-    			<div class="col-md-6 col-lg-7 pl-lg-5 py-5">
+    			<div class="col-md-6 col-lg-7 pl-lg-5 py-5 pb-5">
     				<div class="py-md-5">
 	    				<div class="row justify-content-start pb-3">
 			          <div class="col-md-12 heading-section ftco-animate">
@@ -236,7 +236,7 @@
 											<!-- menampilakan seluruh data array dari variable harga dengan pengulangan -->
 											<?php foreach ($harga as $data): ?>
 												<td><label><?= $data['hari']; ?></label>
-													<span class="mb-3 badge badge-success rounded-pill d-block">
+													<span class="mb-3 py-2 badge badge-primary rounded-pill d-block">
 													Rp. <?= number_format($data['harga'],0,',','.'); ?>
 													</span>		
 												</td>
@@ -248,15 +248,15 @@
 											<!-- menampilakan seluruh data array dari variable pengunjung dengan pengulangan -->
 											<?php foreach ($pengunjung as $data): ?>
 												<td><label><?= $data['tgl_pengunjung']; ?></label>
-												<span class="badge badge-success rounded-pill d-block mx-auto"> <?= $data['jum_pengunjung']; ?></span></td>
+												<span class="py-2 badge badge-primary rounded-pill d-block mx-auto"> <?= $data['jum_pengunjung']; ?></span></td>
 											<?php endforeach; ?>
 										</div>
 										<div class="jamkerja form-group p-3 rounded">
 											<h4 class="text-center">JAM KERJA</h4>
-											<label class="mb-4">Senin - Kamis : <span class="badge badge-success rounded-pill"> 07.00 - 16.00 WIB</span></label>
-											<label>Sabtu - Minggu : <span class="badge badge-success rounded-pill"> 07.00 - 16.00 WIB</span></label>
+											<label class="mb-4">Senin - Kamis : <span class="py-2 mr-3 badge badge-primary rounded-pill"> 07.00 - 16.00 WIB</span></label>
+											<label>Sabtu - Minggu : <span class="py-2 badge badge-primary rounded-pill"> 07.00 - 16.00 WIB</span></label>
 											<br>
-											<span class="libur badge badge-danger rounded-pill d-block mb-3 mt-2 mx-auto">JUMAT LIBUR</span>
+											<span class="libur badge badge-danger-bs rounded-pill d-block mb-3 mt-2 mx-auto">JUMAT LIBUR</span>
 										</div>
 									</form>
 								</div>

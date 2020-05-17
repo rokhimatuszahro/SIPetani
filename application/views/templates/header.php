@@ -46,19 +46,23 @@
                 <li class="nav-item">
                     <a href="<?= base_url('landing_home/#sarana'); ?>" class="nav-link color"><span>Sarana</span></a>
                 </li>
-                <li>
+                <li class="nav-item">
                     <a href="<?= base_url('landing_home/#tentang'); ?>" class="nav-link color"><span>Tentang</span></a>
                 </li>
                 <li class="nav-item">
                     <?php if ($this->uri->segment(1) === 'detail_pembayaran'): ?>
-                        <a href="landing_home/#pemesanan" class="nav-link page-scroll active"><span>Pemesanan</span></a>
+                        <a href="<?= base_url('landing_home/#pemesanan'); ?>" class="nav-link page-scroll active"><span>Pemesanan</span></a>
                     <?php else: ?>
-                        <a href="landing_home/#pemesanan" class="nav-link page-scroll color"><span>Pemesanan</span></a>
+                        <a href="<?= base_url('landing_home/#pemesanan'); ?>" class="nav-link page-scroll color"><span>Pemesanan</span></a>
                     <?php endif; ?>
                 </li>
                 <?php if (session()): ?>
                     <li class="nav-item">
+                    <?php if ($this->uri->segment(1) === 'tiket') : ?>
+                        <a href="<?= base_url('tiket'); ?>" class="nav-link page-scroll active"><span>Tiket</span></a>
+                    <?php else: ?>
                         <a href="<?= base_url('tiket'); ?>" class="nav-link page-scroll color"><span>Tiket</span></a>
+                    <?php endif; ?>
                     </li>
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle color" href="#" data-toggle="dropdown"><span>Profil</span>
