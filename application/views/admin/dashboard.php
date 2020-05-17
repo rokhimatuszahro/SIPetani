@@ -3,7 +3,7 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="index.php">Dashboard</a>
+            <a href="<?= base_url('dashboard'); ?>">Dashboard</a>
           </li>
           <li class="breadcrumb-item active">Lihat Semua</li>
         </ol>
@@ -19,7 +19,7 @@
                 <div class="mr-5">Pemesanan</div>
                 <div class="mr-5"><?= $pemesanan; ?></div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="pemesanan.php">
+              <a class="card-footer text-white clearfix small z-1" href="<?= base_url('pemesanan'); ?>">
                 <span class="float-left">Lihat Data</span>
                 <span class="float-right">
                   <i class="fas fa-angle-right"></i>
@@ -41,7 +41,7 @@
                 </div>
                 <small><?= $pengunjung['tgl_pengunjung']; ?></small>
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="pengunjung.php">
+              <a class="card-footer text-white clearfix small z-1" href="<?= base_url('pengunjung'); ?>">
                 <span class="float-left">Lihat Data</span>
                 <span class="float-right">
                   <i class="fas fa-angle-right"></i>
@@ -58,7 +58,7 @@
                 <div class="mr-5">Harga</div>
                 <div class="mr-5"><?= $harga; ?> Event</div> 
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="harga.php">
+              <a class="card-footer text-white clearfix small z-1" href="<?= base_url('harga'); ?>">
                 <span class="float-left">Lihat Data</span>
                 <span class="float-right">
                   <i class="fas fa-angle-right"></i>
@@ -75,7 +75,7 @@
                 <div class="mr-5">Konfirmasi</div>
                 <div class="mr-5"><?= $cek_pemesanan; ?> Pemesanan</div> 
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="validasi.php">
+              <a class="card-footer text-white clearfix small z-1" href="<?= base_url('konfirmasi'); ?>">
                 <span class="float-left">Lihat Data</span>
                 <span class="float-right">
                   <i class="fas fa-angle-right"></i>

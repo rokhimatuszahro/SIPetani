@@ -34,7 +34,7 @@
           </div>
           <a class="dropdown-item" href="<?= base_url('profileadmin'); ?>">Profil</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">Logout</a>
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
         </div>
       </li>
     </ul>

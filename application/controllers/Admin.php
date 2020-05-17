@@ -85,7 +85,7 @@ class Admin extends CI_Controller {
                 'required' => 'Data %s kosong harap isi data!',
                 'valid_email' => 'Format %s salah'
             ]);
-        $this->form_validation->set_rules('password', 'Password', 'trim|    required',[
+        $this->form_validation->set_rules('password', 'Password', 'trim|required',[
                 'required' => 'Data %s kosong harap isi data!'
             ]);
         $this->form_validation->set_rules('pin', 'PIN', 'trim|required|exact_length[3]|numeric',[
