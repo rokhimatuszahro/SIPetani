@@ -131,6 +131,11 @@ class User_model extends CI_Model {
         $this->db->update('users');
     }
 
+    public function setRegistrasiMobile($data)
+    {
+        $this->db->insert('users', $data);
+    }
+
     
 
 }
