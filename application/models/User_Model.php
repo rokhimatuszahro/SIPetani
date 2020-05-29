@@ -136,6 +136,28 @@ class User_model extends CI_Model {
         $this->db->insert('users', $data);
     }
 
-    
+    public function updateEditProfile($dataedit,$email,$oldfoto,$foto,$id_user,$passbaru)
+    {
+        $emailberubah = FALSE;
+        if($email != $dataedit['email']){
+            $emailberubah = TRUE;
+        }
+        if($foto != ""){
+            if($oldfoto != 'default.jpg'){
+                unlink(FCPATH.'assets/img/profile/'.$oldfoto);
+            }
+            $nama_imgbaru = $id_user.".".time().".profile.mobile.jpeg";
+            $path = './assets/img/profile/'.$nama_imgbaru;
+            $this->db->set('foto', $nama_imgbaru);
+            file_put_contents($path, $foto);
+        }
+        if($passbaru != NULL){
+            $this->db->set('password', $passbaru);
+        }
+        $this->db->set($dataedit);
+        $this->db->where('email', $email);
+        $this->db->update('users');
+        return $emailberubah;
+    }
 
 }

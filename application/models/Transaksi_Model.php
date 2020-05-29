@@ -151,5 +151,23 @@ class Transaksi_model extends CI_Model {
 		$this->db->set('status_cetak', $status);
 		$this->db->where('id_pemesanan', $id);
 	    $this->db->update('pemesanan');	
-	}
+    }
+    
+    public function getTransaksiById($id,$statusbayar)
+    {
+        $this->db->select('*');
+        $this->db->from('pemesanan');
+        $this->db->join('users', 'users.id_user = pemesanan.id_user');
+        $this->db->where('pemesanan.id_user', $id);
+        $this->db->where('pemesanan.status_pembayaran', $statusbayar);
+        return $this->db->get();
+    }
+
+    public function updateBuktiPembayaran($id_user,$foto)
+    {
+        $this->db->set('bukti_pembayaran', $foto); 
+        $this->db->where('id_user', $id_user); 
+        $this->db->where('status_pembayaran', 0); 
+        $this->db->update('pemesanan'); 
+    }
 }
