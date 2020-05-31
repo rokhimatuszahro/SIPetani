@@ -332,7 +332,16 @@ class ApiMobile extends CI_Controller {
         if($data['tiket']['status_pembayaran'] == 1){
             $tampilan = $this->load->view('landing_home/printtiketmobile', $data);
         }else{
-            echo 'tiket tidak dapat dicetak karena pesanan nama '.$data['tiket']['nama_pemesan'].'belum lunas';
+            $data['error'] = '
+                <div class="alert alert-danger alert-dismissible w-27 mx-auto fade show" role="alert">
+                    tiket tidak dapat dicetak karena pesanan atas nama <strong>'.$data['tiket']['nama_pemesan'].'<strong>
+                    belum unggah bukti pembayaran
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            ';
+            $tampilan = $this->load->view('landing_home/printtiketmobile', $data);
         }
     }
 
