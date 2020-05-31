@@ -170,4 +170,71 @@ class Transaksi_model extends CI_Model {
         $this->db->where('status_pembayaran', 0); 
         $this->db->update('pemesanan'); 
     }
+
+    public function getPengunjung()
+    {
+        return $this->db->get('pengunjung');
+    }
+
+    public function getPengunjungById($id)
+    {
+        $this->db->where('id_pengunjung', $id);
+        return $this->db->get('pengunjung');
+    }
+
+    public function setPengunjung($data)
+    {
+        $datainsert = [
+            'tgl_pengunjung' => $data['tanggal'],
+            'jum_pengunjung' => htmlspecialchars($data['jumlah_pengunjung'],true)
+        ];
+        $this->db->insert('pengunjung',$datainsert);
+    }
+
+    public function updatePengunjung($data)
+    {
+        $data_pengunjung = [
+            'tgl_pengunjung' => $data['tanggal'],
+            'jum_pengunjung' => htmlspecialchars($data['jumlah_pengunjung'],true)
+        ];
+        $this->db->set($data_pengunjung);
+        $this->db->where('id_pengunjung', $data['id']);
+        $this->db->update('pengunjung');
+    }
+
+    public function deletePengunjungById($id)
+    {
+        $this->db->delete('pengunjung', ['id_pengunjung' => $id]);
+    }
+
+    public function getHargaById($id)
+    {
+        $this->db->where('id_harga', $id);
+        return $this->db->get('harga');
+    }
+
+    public function setHarga($data)
+    {
+        $datainsert = [
+            'hari' => htmlspecialchars($data['hari'],true),
+            'harga' => htmlspecialchars($data['harga'],true)
+        ];
+        $this->db->insert('harga',$datainsert);
+    }
+
+    public function updateHarga($data)
+    {
+        $data_harga = [
+            'hari' => htmlspecialchars($data['hari'],true),
+            'harga' => htmlspecialchars($data['harga'],true)
+        ];
+        $this->db->set($data_harga);
+        $this->db->where('id_harga', $data['id']);
+        $this->db->update('harga');
+    }
+
+    public function deletehargaById($id)
+    {
+        $this->db->delete('harga', ['id_harga' => $id]);
+    }
 }
