@@ -3,7 +3,7 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="index.php">Dashboard</a>
+            <a href="<?= base_url('dashboard'); ?>">Dashboard</a>
           </li>
           <li class="breadcrumb-item active">Pengunjung</li>
         </ol>
