@@ -7,8 +7,8 @@
                 <form method="POST" action="<?= base_url('tambahharga'); ?>">
                     <div class="form-group">
                         <label for="hari">Hari</label>
-                        <input type="date" class="form-control rounded-pill" id="hari" name="hari" value="<?= set_value ('hari'); ?>">
-                        <?php echo fprm_error('hari','<p class="text-danger small ml-2">','</p>'); ?>
+                        <input type="text" class="form-control rounded-pill" id="hari" name="hari" value="<?= set_value('hari'); ?>">
+                        <?php echo form_error('hari','<p class="text-danger small ml-2">','</p>'); ?>
                     </div>
                     <div class="form-group">
                         <label for="harga">Harga</label>

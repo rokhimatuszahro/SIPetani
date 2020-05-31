@@ -8,7 +8,7 @@
                     <div class="form-group">
                         <label for="tanggal">Tanggal</label>
                         <input type="date" class="form-control rounded-pill" id="tanggal" name="tanggal">
-                        <?php echo fprm_error('tanggal','<p class="text-danger small ml-2">','</p>'); ?>
+                        <?php echo form_error('tanggal','<p class="text-danger small ml-2">','</p>'); ?>
                     </div>
                     <div class="form-group">
                         <label for="jumlah_pengunjung">Jumlah Pengunjung</label>

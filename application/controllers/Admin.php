@@ -232,7 +232,7 @@ class Admin extends CI_Controller {
     // Pengunjung
     public function pengunjung()
     {
-        $data['judul'] = 'SIPetani Profile Admin';
+        $data['judul'] = 'SIPetani Pengunjung';
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
         $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
         $data['pengunjung'] = $this->Transaksi_model->getPengunjung()->result_array();
@@ -249,10 +249,10 @@ class Admin extends CI_Controller {
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
         $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
 
-        $this->from_validation->set_rules('tanggal', 'Tanggal', 'trim|required',[
+        $this->form_validation->set_rules('tanggal', 'Tanggal', 'trim|required',[
                 'required' => 'Data %s kosong harap isi data!'
             ]);
-        $this->from_validation->set_rules('jumlah_pengunjung', 'Jumlah Pengunjung', 'trim|required|numeric',[
+        $this->form_validation->set_rules('jumlah_pengunjung', 'Jumlah Pengunjung', 'trim|required|numeric',[
                 'required' => 'Data %s kosong harap isi data!',
                 'numeric' => 'Format %s salah'
             ]);
@@ -271,29 +271,29 @@ class Admin extends CI_Controller {
 
     public function editPengunjung($id)
     {
-        $data['judul'] = 'SIPetani Tambah Data Pengunjung';
+        $data['judul'] = 'SIPetani Edit Data Pengunjung';
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
         $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
-        $data['pengunjung'] = $this->Transaksi_model->getPengunjungById()->result_array();
+        $data['pengunjung'] = $this->Transaksi_model->getPengunjungById($id)->row_array();
 
-    $this->from_validation->set_rules('tanggal', 'Tanggal', 'trim|required',[
-            'required' => 'Data %s kosong harap isi data!'
-        ]);
-    $this->from_validation->set_rules('jumlah_pengunjung', 'Jumlah Pengunjung', 'trim|required|numeric',[
-            'required' => 'Data %s kosong harap isi data!',
-            'numeric' => 'Format %s salah'
-        ]);
-    if ($this->form_validation->run() == FALSE)
-    {
-        $this->load->view('templates/v_header_admin',$data);
-        $this->load->view('admin/editpengunjung');
-        $this->load->view('templates/v_footer_admin',$data);
-    }else{
-        $data = $this->input->post();
-        $this->Transaksi_model->setPengunjung($data);
-        $this->session->set_flashdata('message','<div class="alert alert-success role="alert">Data Berhasil Diupdate</div>');
-        redirect('pengunjung');
-        }
+        $this->form_validation->set_rules('tanggal', 'Tanggal', 'trim|required',[
+                'required' => 'Data %s kosong harap isi data!'
+            ]);
+        $this->form_validation->set_rules('jumlah_pengunjung', 'Jumlah Pengunjung', 'trim|required|numeric',[
+                'required' => 'Data %s kosong harap isi data!',
+                'numeric' => 'Format %s salah'
+            ]);
+        if ($this->form_validation->run() == FALSE)
+        {
+            $this->load->view('templates/v_header_admin',$data);
+            $this->load->view('admin/editpengunjung');
+            $this->load->view('templates/v_footer_admin',$data);
+        }else{
+            $data = $this->input->post();
+            $this->Transaksi_model->setPengunjung($data);
+            $this->session->set_flashdata('message','<div class="alert alert-success role="alert">Data Berhasil Diupdate</div>');
+            redirect('pengunjung');
+            }
     }
 
     public function hapusPengunjung($id)
@@ -307,7 +307,7 @@ class Admin extends CI_Controller {
     // Harga
     public function harga()
     {
-        $data['judul'] = 'SIPetani Profile Admin';
+        $data['judul'] = 'SIPetani Harga';
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
         $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
         $data['harga'] = $this->Transaksi_model->getHarga()->result_array();
@@ -319,54 +319,55 @@ class Admin extends CI_Controller {
     }
 
     public function tambahHarga()
+	{
+		$data['judul'] = 'SIPetani Tambah Data Harga';
+		$data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
+		$data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
+
+		$this->form_validation->set_rules('hari', 'Hari', 'trim|required',[
+				'required' => 'Data %s kosong harap isi data!'
+			]);
+		$this->form_validation->set_rules('harga', 'Harga', 'trim|required|numeric',[
+				'required' => 'Data %s kosong harap isi data!',
+				'numeric' => 'Format %s salah'
+			]);
+		if ($this->form_validation->run() == FALSE)
+        {
+			$this->load->view('templates/v_header_admin',$data);
+			$this->load->view('admin/tambahharga');
+			$this->load->view('templates/v_footer_admin2',$data);
+		}else{
+			$data = $this->input->post();
+			$this->Transaksi_model->setHarga($data);
+			$this->session->set_flashdata('message','<div class="alert alert-success role="alert">Data Berhasil Ditambahkan</div>');
+		    redirect('harga');
+		}
+	}
+
+    public function editHarga($id)
     {
-        $data['judul'] = 'SIPetani Tambah Data Pengunjung';
+        $data['judul'] = 'SIPetani Edit Data Harga';
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
         $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
+        $data['harga'] = $this->Transaksi_model->getHargaById($id)->row_array();
 
-        $this->from_validation->set_rules('hari', 'Hari', 'trim|required',[
+        $this->form_validation->set_rules('hari', 'Hari', 'trim|required',[
                 'required' => 'Data %s kosong harap isi data!'
             ]);
-        $this->from_validation->set_rules('harga', 'Harga', 'trim|required|numeric',[
+        $this->form_validation->set_rules('harga', 'Harga', 'trim|required|numeric',[
                 'required' => 'Data %s kosong harap isi data!',
                 'numeric' => 'Format %s salah'
             ]);
         if ($this->form_validation->run() == FALSE)
         {
             $this->load->view('templates/v_header_admin',$data);
-            $this->load->view('admin/tambahharga');
+            $this->load->view('admin/editharga');
             $this->load->view('templates/v_footer_admin',$data);
         }else{
             $data = $this->input->post();
-            $this->Transaksi_model->setHarga($data);
-            $this->session->set_flashdata('message','<div class="alert alert-success role="alert">Data Berhasil Ditambahkan</div>');
+            $this->Transaksi_model->updateharga($data);
+            $this->session->set_flashdata('message','<div class="alert alert-success role="alert">Data Berhasil Diupdate</div>');
             redirect('harga');
-    }
-
-    public function editHarga($id)
-    {
-        $data['judul'] = 'SIPetani Tambah Data Pengunjung';
-        $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
-        $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
-        $data['harga'] = $this->Transaksi_model->getHargaById()->result_array();
-
-    $this->from_validation->set_rules('hari', 'Hari', 'trim|required',[
-            'required' => 'Data %s kosong harap isi data!'
-        ]);
-    $this->from_validation->set_rules('harga', 'Harga', 'trim|required|numeric',[
-            'required' => 'Data %s kosong harap isi data!',
-            'numeric' => 'Format %s salah'
-        ]);
-    if ($this->form_validation->run() == FALSE)
-    {
-        $this->load->view('templates/v_header_admin',$data);
-        $this->load->view('admin/editharga');
-        $this->load->view('templates/v_footer_admin',$data);
-    }else{
-        $data = $this->input->post();
-        $this->Transaksi_model->updateharga($data);
-        $this->session->set_flashdata('message','<div class="alert alert-success role="alert">Data Berhasil Diupdate</div>');
-        redirect('harga');
         }
     }
 
