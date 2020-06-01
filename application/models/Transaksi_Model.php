@@ -59,7 +59,7 @@ class Transaksi_model extends CI_Model {
         $this->db->select('*');
         $this->db->from('pemesanan');
         $this->db->join('users', 'users.id_user = pemesanan.id_user');
-        $this->db->where('pemesanan.bukti_pembayaran !=', 0);
+        $this->db->where('pemesanan.bukti_pembayaran !=', NULL);
         $this->db->order_by('id_pemesanan', 'DESC');
         return $this->db->get();
     }
@@ -68,7 +68,7 @@ class Transaksi_model extends CI_Model {
     {
         if ($id == 'all') {
             $this->db->set('status_pembayaran', $status);
-            $this->db->where('bukti_pembayaran !=', 0);
+            $this->db->where('bukti_pembayaran !=', NULL);
             $this->db->update('pemesanan');
         }else{
             $this->db->set('status_pembayaran', $status);
@@ -191,14 +191,14 @@ class Transaksi_model extends CI_Model {
         $this->db->insert('pengunjung',$datainsert);
     }
 
-    public function updatePengunjung($data)
+    public function updatePengunjung($data,$id)
     {
         $data_pengunjung = [
             'tgl_pengunjung' => $data['tanggal'],
             'jum_pengunjung' => htmlspecialchars($data['jumlah_pengunjung'],true)
         ];
         $this->db->set($data_pengunjung);
-        $this->db->where('id_pengunjung', $data['id']);
+        $this->db->where('id_pengunjung', $id);
         $this->db->update('pengunjung');
     }
 
@@ -222,14 +222,14 @@ class Transaksi_model extends CI_Model {
         $this->db->insert('harga',$datainsert);
     }
 
-    public function updateHarga($data)
+    public function updateHarga($data,$id)
     {
         $data_harga = [
             'hari' => htmlspecialchars($data['hari'],true),
             'harga' => htmlspecialchars($data['harga'],true)
         ];
         $this->db->set($data_harga);
-        $this->db->where('id_harga', $data['id']);
+        $this->db->where('id_harga', $id);
         $this->db->update('harga');
     }
 
