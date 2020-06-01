@@ -39,72 +39,72 @@
 
 /*Landing Page Img*/
 .hero .js-fullheight.gambar1 {
-  background-image: url('http://localhost/sipetani/assets/img/home/1.JPG');
+  background-image: url('http://tikettamanbotani.mif-project.com/assets/img/home/1.JPG');
 }
 
 .hero .js-fullheight.gambar2 {
-  background-image: url('http://localhost/sipetani/assets/img/home/3.JPG');
+  background-image: url('http://tikettamanbotani.mif-project.com/assets/img/home/3.JPG');
 }
 
 /*bg_SVG*/
 .bg-img-pemesanan{
-  background-image: url('http://localhost/sipetani/assets/img/svg/booking2_primary.svg');
+  background-image: url('http://tikettamanbotani.mif-project.com/assets/img/svg/booking2_primary.svg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 0 58px;
 }
 
 .bg-img-detail-pembayaran{
-  background-image: url('http://localhost/sipetani/assets/img/svg/transfer_primary.svg');
+  background-image: url('http://tikettamanbotani.mif-project.com/assets/img/svg/transfer_primary.svg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 25px 0;
 }
 
 .bg-img-form-pembayaran{
-  background-image: url('http://localhost/sipetani/assets/img/svg/form.svg');
+  background-image: url('http://tikettamanbotani.mif-project.com/assets/img/svg/form.svg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 5px 100px;
 }
 
 .bg-img-upload-pemesanan{
-  background-image: url('http://localhost/sipetani/assets/img/svg/upload_primary.svg');
+  background-image: url('http://tikettamanbotani.mif-project.com/assets/img/svg/upload_primary.svg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 0 140px;
 }
 
 .bg-img-detail-pemesanan{
-  background-image: url('http://localhost/sipetani/assets/img/svg/detail_pemesanan2_primary.svg');
+  background-image: url('http://tikettamanbotani.mif-project.com/assets/img/svg/detail_pemesanan2_primary.svg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 0 50px;
 }
 
 .bg-lupa-password{
-  background-image: url('http://localhost/sipetani/assets/img/svg/lupa_password_primary.svg');
+  background-image: url('http://tikettamanbotani.mif-project.com/assets/img/svg/lupa_password_primary.svg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 0 90px;
 }
 
 .bg-reset-password{
-  background-image: url('http://localhost/sipetani/assets/img/svg/reset.svg');
+  background-image: url('http://tikettamanbotani.mif-project.com/assets/img/svg/reset.svg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 10px 60px;
 }
 
 .bg-wellcome{
-  background-image: url('http://localhost/sipetani/assets/img/svg/wellcome.svg');
+  background-image: url('http://tikettamanbotani.mif-project.com/assets/img/svg/wellcome.svg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 0 60px;
 }
 
 .bg-registrasi{
-  background-image: url('http://localhost/sipetani/assets/img/svg/mobile_post.svg');
+  background-image: url('http://tikettamanbotani.mif-project.com/assets/img/svg/mobile_post.svg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 10px 110px;
@@ -112,7 +112,7 @@
 
 /*bg jumbotron*/
 body section.bg-jumbotron{
-  background-image: url('http://localhost/sipetani/assets/img/jumbotron/1.jpg');
+  background-image: url('http://tikettamanbotani.mif-project.com/assets/img/jumbotron/1.jpg');
   background-size: cover;
 }
 
