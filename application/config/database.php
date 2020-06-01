@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'http://tikettamanbotani.mif-project.com',
-	'username' => 'u8823774_tikettamanbotani',
-	'password' => 'mif2017',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
 	'database' => 'u8823774_tikettamanbotani',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
