@@ -18,10 +18,10 @@
                         <br><hr>
                         <div class="row">
                             <div class="left col-md-6">
-                            <a class="btn btn-danger rounded-pill ml-3" bref="<?= base_url('harga'); ?>">Batal</a>
+                            <a class="btn btn-danger rounded-pill float-left" href="<?= base_url('harga'); ?>">Batal</a>
                         </div>
                         <div class="right col-md-6">
-                            <button class="btn btn-primary rounded-pill ml-5" type="submit" name="submit">Tambah</button>
+                            <button class="btn btn-primary rounded-pill float-right" type="submit" name="submit">Tambah</button>
                             </div>
                         </div>
                     </form>

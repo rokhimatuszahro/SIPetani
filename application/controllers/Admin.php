@@ -21,7 +21,7 @@ class Admin extends CI_Controller {
         // Output/hasil model dengan 1 data : row_array(), lebih 1 data : result_array(), jumlah data : num_rows()
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
         $data['users'] = $this->User_model->getUser()->result_array();
-        $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
+        $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,NULL)->num_rows();
         $data['pemesanan'] = $this->Transaksi_model->getPemesanan()->num_rows();
         $data['harga'] = $this->Transaksi_model->getHarga()->num_rows();
         $data['pengunjung'] = $this->Transaksi_model->getPengunjungLimit(1)->row_array();
@@ -37,8 +37,8 @@ class Admin extends CI_Controller {
 
         // Menyimpan Data Rekap harian, bulanan, dan tahunan pada data array untuk parsing data ke view
         $data['data_rekap_harian'] = $this->Transaksi_model->getDataRekap($hari,'tanggal_pemesanan')->row_array();
-        $data['data_rekap_bulanan'] = $this->Transaksi_model->getDataRekap($bulan, 'tanggal_pemesanan')->row_array();
-        $data['data_rekap_tahunan'] = $this->Transaksi_model->getDataRekap($tahun, 'tanggal_pemesanan')->row_array();
+        $data['data_rekap_bulanan'] = $this->Transaksi_model->getDataRekap($bulan, 'MONTH(tanggal_pemesanan)')->row_array();
+        $data['data_rekap_tahunan'] = $this->Transaksi_model->getDataRekap($tahun, 'YEAR(tanggal_pemesanan)')->row_array();
 
         // Array Chart Tahunan yg menampung data total transaksi bulanan
         $arr_chart = [];
@@ -74,7 +74,7 @@ class Admin extends CI_Controller {
         $this->User_model->deleteUserById($id); // Model menghapus data berdasarkan UserID dimana id didapat dri paramenter url
         
         // set pesan flash ketika pesan berhasil dihapus yg nantinya akan ditampilkan di view berdasarkan key flashdata yg sudah dibuat
-        $this->session->set_flashdata('message', '<div class="alert alert-success role="alert">Data Berhasil Dihapus</div>');
+        $this->session->set_flashdata('message', 'Berhasil hapus Akun Admin');
         redirect('dashboard');  // Mengarahkan keadaan saat ini ke method dashboard
     }
 
@@ -117,7 +117,7 @@ class Admin extends CI_Controller {
             $this->User_model->setRegistrasiAdmin($data);   // Insert data registrasi user
 
             // set pesan flash ketika pesan berhasil dihapus yg nantinya akan ditampilkan di view berdasarkan key flashdata yg sudah dibuat
-            $this->session->set_flashdata('message', '<div class="alert alert-success role="alert">Data Berhasil Ditambahkan</div>');
+            $this->session->set_flashdata('message', 'Berhasil membuat Akun Admin');
             redirect('dashboard'); // Mengarahkan keadaan saat ini ke method dashboard
         }   
     }
@@ -129,7 +129,7 @@ class Admin extends CI_Controller {
         // Data berupa array dengan key dan value/nilai untuk parsing data ke view
         $data['judul'] = 'SIPetani Profile Admin';
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
-        $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
+        $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,NULL)->num_rows();
 
         // rule/aturan untuk form validasi dengan parameter (name_pada inputan form post, string, rule/aturan)
         $this->form_validation->set_rules('nama', 'Nama', 'trim|required',[
@@ -160,7 +160,7 @@ class Admin extends CI_Controller {
             $this->User_model->updateUserProfileByEmail($this->input->post(), $data['user']['foto']); // Update profil data dengan parameter data inputan dari form dengn post dan foto lama
 
             // set pesan flash ketika pesan berhasil dihapus yg nantinya akan ditampilkan di view berdasarkan key flashdata yg sudah dibuat
-            $this->session->set_flashdata('message', '<div class="alert alert-primary small">Edit Profile<strong>Berhasil</strong></div>');
+            $this->session->set_flashdata('message', 'Berhasil Edit Profile');
             redirect('profileadmin'); // Mengarahkan keadaan saat ini ke method profileadmin
         }
     }
@@ -172,7 +172,7 @@ class Admin extends CI_Controller {
         // Data berupa array dengan key dan value/nilai untuk parsing data ke view
         $data['judul'] = 'SIPetani Pemesanan';
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
-        $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
+        $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,NULL)->num_rows();
         $data['pemesanan'] = $this->Transaksi_model->getPemesanan()->result_array();
 
         // Load view dengan mengirimkan data array yang sudah disiapkan sebelumnya
@@ -189,7 +189,7 @@ class Admin extends CI_Controller {
         // Data berupa array dengan key dan value/nilai untuk parsing data ke view
         $data['judul'] = 'SIPetani Konfirmasi';
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
-        $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
+        $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,NULL)->num_rows();
         $data['konfirmasi'] = $this->Transaksi_model->getKonfirmasi()->result_array();
 
         // Load view dengan mengirimkan data array yang sudah disiapkan sebelumnya
@@ -209,21 +209,21 @@ class Admin extends CI_Controller {
         if ($id == 'all') {
             
             // set pesan flash ketika pesan berhasil dihapus yg nantinya akan ditampilkan di view berdasarkan key flashdata yg sudah dibuat
-            $this->session->set_flashdata('message', '<div class="alert alert-success role="alert">Semua Data Berhasil Dikonfirmasi</div>');
+            $this->session->set_flashdata('message', 'Berhasil Konfirmasi semua pesanan');
             redirect('konfirmasi'); // Mengarahkan keadaan saat ini ke method konfirmasi
 
         // Jika status sama dengan 1
         }elseif ($status == 1) {
 
             // set pesan flash ketika pesan berhasil dihapus yg nantinya akan ditampilkan di view berdasarkan key flashdata yg sudah dibuat
-            $this->session->set_flashdata('message', '<div class="alert alert-success role="alert">Data Berhasil Dikonfirmasi</div>');
+            $this->session->set_flashdata('message', 'Berhasil Konfirmasi pesanan');
             redirect('konfirmasi'); // Mengarahkan keadaan saat ini ke method konfirmasi
         
         // Jika tidak maka akan dilakukan proses dibawah
         }else {
 
             // set pesan flash ketika pesan berhasil dihapus yg nantinya akan ditampilkan di view berdasarkan key flashdata yg sudah dibuat
-            $this->session->set_flashdata('message', '<div class="alert alert-success role="alert">Konfirmasi Data Berhasil Dibatalkan</div>');
+            $this->session->set_flashdata('message', 'Konfirmasi Dibatalkan');
             redirect('konfirmasi'); // Mengarahkan keadaan saat ini ke method konfirmasi
         }
     }
@@ -234,7 +234,7 @@ class Admin extends CI_Controller {
     {
         $data['judul'] = 'SIPetani Pengunjung';
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
-        $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
+        $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,NULL)->num_rows();
         $data['pengunjung'] = $this->Transaksi_model->getPengunjung()->result_array();
 
         $this->load->view('templates/v_header_admin',$data);
@@ -247,7 +247,7 @@ class Admin extends CI_Controller {
     {
         $data['judul'] = 'SIPetani Tambah Data Pengunjung';
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
-        $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
+        $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,NULL)->num_rows();
 
         $this->form_validation->set_rules('tanggal', 'Tanggal', 'trim|required',[
                 'required' => 'Data %s kosong harap isi data!'
@@ -260,11 +260,11 @@ class Admin extends CI_Controller {
         {
             $this->load->view('templates/v_header_admin',$data);
             $this->load->view('admin/tambahpengunjung');
-            $this->load->view('templates/v_footer_admin',$data);
+            $this->load->view('templates/v_footer_admin2',$data);
         }else{
             $data = $this->input->post();
             $this->Transaksi_model->setPengunjung($data);
-            $this->session->set_flashdata('message','<div class="alert alert-success role="alert">Data Berhasil Ditambahkan</div>');
+            $this->session->set_flashdata('message','Berhasil menambah pengunjung');
             redirect('pengunjung');
         }
     }
@@ -273,7 +273,7 @@ class Admin extends CI_Controller {
     {
         $data['judul'] = 'SIPetani Edit Data Pengunjung';
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
-        $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
+        $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,NULL)->num_rows();
         $data['pengunjung'] = $this->Transaksi_model->getPengunjungById($id)->row_array();
 
         $this->form_validation->set_rules('tanggal', 'Tanggal', 'trim|required',[
@@ -290,8 +290,8 @@ class Admin extends CI_Controller {
             $this->load->view('templates/v_footer_admin',$data);
         }else{
             $data = $this->input->post();
-            $this->Transaksi_model->setPengunjung($data);
-            $this->session->set_flashdata('message','<div class="alert alert-success role="alert">Data Berhasil Diupdate</div>');
+            $this->Transaksi_model->updatePengunjung($data,$id);
+            $this->session->set_flashdata('message','Berhasil Update Pengunjung');
             redirect('pengunjung');
             }
     }
@@ -299,7 +299,7 @@ class Admin extends CI_Controller {
     public function hapusPengunjung($id)
     {
         $this->Transaksi_model->deletePengunjungById($id);
-        $this->session->set_flashdata('message','<div class="alert alert-success role="alert">Data Berhasil Dihapus</div>');
+        $this->session->set_flashdata('message','Berhasil Hapus Pengunjung');
         redirect('pengunjung');
     }
 
@@ -309,7 +309,7 @@ class Admin extends CI_Controller {
     {
         $data['judul'] = 'SIPetani Harga';
         $data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
-        $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,0)->num_rows();
+        $data['cek_pemesanan'] = $this->Transaksi_model->getCekPemesanan(0,NULL)->num_rows();
         $data['harga'] = $this->Transaksi_model->getHarga()->result_array();
 
         $this->load->view('templates/v_header_admin',$data);
@@ -339,7 +339,7 @@ class Admin extends CI_Controller {
 		}else{
 			$data = $this->input->post();
 			$this->Transaksi_model->setHarga($data);
-			$this->session->set_flashdata('message','<div class="alert alert-success role="alert">Data Berhasil Ditambahkan</div>');
+			$this->session->set_flashdata('message','Berhasil Tambah Harga');
 		    redirect('harga');
 		}
 	}
@@ -365,8 +365,8 @@ class Admin extends CI_Controller {
             $this->load->view('templates/v_footer_admin',$data);
         }else{
             $data = $this->input->post();
-            $this->Transaksi_model->updateharga($data);
-            $this->session->set_flashdata('message','<div class="alert alert-success role="alert">Data Berhasil Diupdate</div>');
+            $this->Transaksi_model->updateharga($data,$id);
+            $this->session->set_flashdata('message','Berhasil Update Harga');
             redirect('harga');
         }
     }
@@ -374,7 +374,7 @@ class Admin extends CI_Controller {
     public function hapusHarga($id)
     {
         $this->Transaksi_model->deleteHargaById($id);
-        $this->session->set_flashdata('message','<div class="alert alert-success role="alert">Data Berhasil Dihapus</div>');
+        $this->session->set_flashdata('message','Berhasil Hapus Harga');
         redirect('harga');
     }
 }

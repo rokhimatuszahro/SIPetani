@@ -15,7 +15,7 @@
     Data Harga</div>
   <div class="card-body">
     <div class="table-responsive">
-    <?= $this->session->flashdata('message'); ?>
+    <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>" data-judul="Harga"></div>
     <a href="<?= base_url('tambahharga'); ?>" class="btn btn-success mb-3"><i class="fa fa-dollar-sign mr-2"></i>Tambah Data</a>
       <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
         <thead class="text-center">
@@ -37,7 +37,7 @@
             <td><?= $data["hari"]; ?></td>
             <td>Rp. <?= number_format($data["harga"], 0, ".", "."); ?></td>
             <td class="text-center">
-              <a href="<?= base_url('admin/hapusharga/'); ?><?= $data['id_harga']; ?>" onclick ="return confirm('Anda Yakin Ingin Menghapus Data Ini?');" class="btn btn-sm btn-danger">
+              <a href="<?= base_url('admin/hapusharga/'); ?><?= $data['id_harga']; ?>" class="btn btn-sm btn-danger hapus">
                 <i class="fa fa-trash"></i>
               </a> || 
               <a href="<?= base_url('admin/editharga/'); ?><?=$data["id_harga"]; ?>" class="btn btn-sm btn-warning">

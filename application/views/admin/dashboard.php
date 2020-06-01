@@ -173,7 +173,7 @@
             <div class="table-responsive">
 
                 <!-- Menampilkan Flashdata yg dibuat dan dikirim dari controller -->
-                <?= $this->session->flashdata('message'); ?>
+                <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>" data-judul="Akun Admin"></div>
 
               <!-- mengarahkan keadaan saat ini ke akunadmin -->
               <a href="<?= base_url('akunadmin'); ?>" class="btn btn-success mb-3">
@@ -224,7 +224,7 @@
                       <?php endif ?>
                     </td>
                     <!-- mengarahkan keadaan saat ini ke admin/hapususer/parameter -->
-                    <td class="text-center"><a href="<?= base_url('admin/hapususer/'); ?><?= $datauser['id_user']; ?>" onclick ="return confirm('Anda Yakin Ingin Menghapus Data Ini?');" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
+                    <td class="text-center"><a href="<?= base_url('admin/hapususer/'); ?><?= $datauser['id_user']; ?>" class="btn btn-danger btn-sm hapus"><i class="fa fa-trash"></i></a></td>
                   </tr>
                   <?php $n++; ?>
                   <?php endforeach; ?>
