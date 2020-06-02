@@ -79,7 +79,7 @@ class Landing_Home extends CI_Controller {
 			$this->load->view('templates/footer');
 		}else{
 			$this->User_model->updateUserProfileByEmail($this->input->post(), $data['user']['foto']);
-			$this->session->set_flashdata('message','<div class="alert alert-primary-bs small">Edit Profile <strong>Berhasil!</strong></div>');
+			$this->session->set_flashdata('message','<div class="flash-data" data-flashdata="Edit profile berhasil!" data-judul="Edit Akun '.$data['user']['nama'].'" data-type="success"></div>');
        		redirect('landing_home/editprofile');
 		}
 	}
@@ -102,7 +102,7 @@ class Landing_Home extends CI_Controller {
 				// cek apakah memiliki tanggungan
 				$cekstatuspembayaran = $this->Transaksi_model->getPemesananStatusbayar($this->session->userdata('email'),0)->num_rows();
 				if ($cekstatuspembayaran > 0) {
-					$this->session->set_flashdata('message','<div class="alert alert-danger-bs small">Anda Masih memiliki tanggungan harap <strong>Unggah!</strong> Bukti Pembayaran!</div>');
+					$this->session->set_flashdata('message','<div class="flash-data" data-flashdata="Anda masih memiliki tanggungan, harap unggah bukti pembayaran" data-judul="Pemesanan Tiket" data-type="warning"></div>');
 			  		redirect('landing_home/#pemesanan');
 				}
 			}
@@ -114,7 +114,7 @@ class Landing_Home extends CI_Controller {
 			$data['jumlah_tiket'] = $jml_tiket;
 
 			if(date('l',strtotime($tgl_berkunjung)) == "Friday"){
-				$this->session->set_flashdata('message','<div class="alert alert-danger-bs small">Tanggal berkunjung untuk Hari Jumat <strong>Libur!</strong></div>');
+				$this->session->set_flashdata('message','<div class="flash-data" data-flashdata="Tanggal berkunjung untuk hari Jumat Libur!" data-judul="Pemesanan Tiket" data-type="error"></div>');
 		       	redirect('landing_home/#pemesanan');
 			}elseif (date('l',strtotime($tgl_berkunjung)) == "Saturday" || date('l',strtotime($tgl_berkunjung)) == "Sunday") {
 				$jumlah = $jml_tiket;
@@ -176,7 +176,7 @@ class Landing_Home extends CI_Controller {
 					$this->session->unset_userdata('jml');
 					redirect('landing_home/detail_pemesanan');
 				}else{
-					$this->session->set_flashdata('message','<div class="alert alert-primary-bs small">Harap login untuk melanjut proses pemesanan <strong>tiket!</strong></div>');
+					$this->session->set_flashdata('message','<div class="flash-data" data-flashdata="Harap Login untuk melanjutkan pemesanan tiket!" data-judul="Login Akun" data-type="info"></div>');
 			  		redirect('login');
 				}
 			}
@@ -196,7 +196,7 @@ class Landing_Home extends CI_Controller {
 		
 		// cek apakah memiliki pesananan baru atau tidak
 		if ($this->Transaksi_model->getPemesananStatusbayar($this->session->userdata('email'),0)->num_rows() == NULL) {
-			$this->session->set_flashdata('message','<div class="alert alert-danger-bs small">Anda tidak memiliki pesananan silahkan isi form <strong>pemesanan!</strong></div>');
+			$this->session->set_flashdata('message','<div class="flash-data" data-flashdata="Anda tidak memiliki pesanan, silahkan isi form pemesanan tiket!" data-judul="Pemesanan Tiket" data-type="warning"></div>');
 			redirect('landing_home/#pemesanan');
 		}
 
@@ -209,7 +209,7 @@ class Landing_Home extends CI_Controller {
 
 			$this->Transaksi_model->updateTransaksiUploadBukti($data['user']['id_user'],$data['pemesan']['bukti_pembayaran'],$this->input->post());
 			
-			$this->session->set_flashdata('message','<div class="alert alert-primary-bs small">Anda berhasil upload bukti pembayaran silahkan tunggu konfirmasi dari <strong>Admin!</strong><br>Anda dapat upload bukti pembayaran selama pesananan anda belum dikonfirmasi</div>');
+			$this->session->set_flashdata('message','<div class="flash-data" data-flashdata="Anda berhasil upload bukti pembayaran, silahkan tunggu konfirmasi dari Admin, Anda dapat upload bukti pembayaran kembali selama pesanan Anda belum dikonfirmasi!" data-judul="Pemesanan Tiket" data-type="info"></div>');
 			redirect('detail_pemesanan');
 		}
 		

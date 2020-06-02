@@ -15,8 +15,11 @@
             Konfirmasi Data Pemesanan</div>
           <div class="card-body">
             <div class="table-responsive">
-            <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>" data-judul="Konfirmasi"></div>
-              <a href="<?= base_url('admin/validasikonfirmasi/'); ?>all/1" class="btn btn-success mb-3 hapus"><i class="fa fa-tasks mr-2"></i>Konfirmasi Semua</a>
+
+            <!-- Menampilkan Flashdata yg dibuat dan dikirim dari controller -->
+            <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>" data-judul="Konfirmasi" data-type="success"></div>
+
+              <a href="<?= base_url('admin/validasikonfirmasi/'); ?>all/1" class="btn btn-success mb-3 dialog" data-judul-dialog="Konfirmasi Semua"><i class="fa fa-tasks mr-2"></i>Konfirmasi Semua</a>
               <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
                 <thead class="text-center">
                   <tr>

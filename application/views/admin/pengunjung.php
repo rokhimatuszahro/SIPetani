@@ -15,7 +15,10 @@
             Data Pengunjung</div>
           <div class="card-body">
             <div class="table-responsive">
-            <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>" data-judul="Pengunjung"></div>
+
+            <!-- Menampilkan Flashdata yg dibuat dan dikirim dari controller -->
+            <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>" data-judul="Pengunjung" data-type="success"></div>
+
             <a href="<?= base_url('tambahpengunjung'); ?>" class="btn btn-success mb-3"><i class="fa fa-users mr-2"></i>Tambah Data</a>
               <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
                 <thead class="text-center">
@@ -37,7 +40,7 @@
                     <td><?= $data["tgl_pengunjung"]; ?></td>
                     <td><?= $data["jum_pengunjung"]; ?></td>
                     <td class="text-center">
-                      <a href="<?= base_url('admin/hapuspengunjung/'); ?><?=$data['id_pengunjung']; ?>" class="btn btn-danger btn-sm hapus">
+                      <a href="<?= base_url('admin/hapuspengunjung/'); ?><?=$data['id_pengunjung']; ?>" class="btn btn-danger btn-sm dialog" data-judul-dialog="Hapus Pengunjung">
                         <i class="fa fa-trash"></i>
                       </a> || 
                       <a href="<?= base_url('admin/editpengunjung/'); ?><?=$data["id_pengunjung"]; ?>" class="btn btn-warning btn-sm">
