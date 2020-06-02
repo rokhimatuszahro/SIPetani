@@ -6,11 +6,20 @@ $(function() {
     const judul_dialog = $('.dialog').data('judul-dialog');
 
     if (flashdata) {
-        Swal.fire(
-            judul,
-            flashdata,
-            type
-        )    
+        Swal.fire({
+            title : judul,
+            text : flashdata,
+            icon : type,
+            backdrop: `
+                linear-gradient(to bottom right, rgba(5,117,230,0.2), rgba(0,0,130,0.3))
+            `,
+            showClass: {
+                popup: 'animate__animated animate__jello'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }    
+        })    
     }
 
     $('.dialog').click(function(e){
@@ -30,6 +39,15 @@ $(function() {
             title: 'Apa anda ingin '+judul_dialog+'?',
             text: 'Klik Ya untuk lanjut!',
             icon: 'warning',
+            backdrop: `
+                    linear-gradient(to bottom right, rgba(5,117,230,0.2), rgba(0,0,130,0.3))
+                `,
+            showClass: {
+                popup: 'animate__animated animate__jello'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            },
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -39,9 +57,20 @@ $(function() {
                 document.location.href = href;
             }else if(result.dismiss === Swal.DismissReason.cancel){
                 swalWithBootstrapButtons.fire(
-                    'Batal '+judul_dialog,
-                    'Data anda aman :)',
-                    'error'
+                    {
+                        title : 'Batal '+judul_dialog,
+                        text : 'Data anda aman :)',
+                        icon : 'error',
+                        backdrop: `
+                            linear-gradient(to bottom right, rgba(5,117,230,0.2), rgba(0,0,130,0.3))
+                        `,
+                        showClass: {
+                            popup: 'animate__animated animate__jello'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    }
                 )
             }
           })

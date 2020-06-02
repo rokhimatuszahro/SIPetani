@@ -8,6 +8,9 @@
 	    
 		<!-- font -->
 	   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900" rel="stylesheet">
+
+       <!-- Animated -->
+       <link rel="stylesheet" href="<?= base_url('assets/css/animate.min.css'); ?>">
 	    	
 	   <!-- MY CSS -->
 	   <link rel="stylesheet" href="<?= base_url('assets/css/style.css'); ?>">
