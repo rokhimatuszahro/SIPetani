@@ -35,11 +35,11 @@ class Auth extends CI_Controller {
         is_login();
         $email = htmlspecialchars($this->input->post('email'));
         $password = htmlspecialchars($this->input->post('password'));
-        $user = $this->User_model->getUserByEmail($email)->row_array();
+        $user = $this->User_Model->getUserByEmail($email)->row_array();
         if ($user){
             if ($user['status'] == 1) {
                 if (password_verify($password, $user['password'])) {
-                    $this->User_model->updateUserOnline($user['id_user']);
+                    $this->User_Model->updateUserOnline($user['id_user']);
                     $data = [
                         'email' => $user['email'],
                         'id_user' => $user['id_user'],
@@ -88,8 +88,8 @@ class Auth extends CI_Controller {
                 'waktu_buat' => time()
             ];
 
-            $this->User_model->setUserToken($user_token);
-            $this->User_model->setRegistrasi($data);
+            $this->User_Model->setUserToken($user_token);
+            $this->User_Model->setRegistrasi($data);
 
             $this->_sendEmail($token, 'verify');
             
@@ -145,18 +145,18 @@ class Auth extends CI_Controller {
         $email = $this->input->get('email');
         $token = $this->input->get('token');
 
-        $user = $this->User_model->getUserByEmail($email)->row_array();
+        $user = $this->User_Model->getUserByEmail($email)->row_array();
         if ($user) {
-            $user_token = $this->User_model->getUserToken($token)->row_array();
+            $user_token = $this->User_Model->getUserToken($token)->row_array();
             if (!$user['status'] == 1) {
                 if ($user_token) {
                     if (time() - $user_token['waktu_buat'] < (60*60*24)) {
-                            $this->User_model->updateUserByEmail($email);
-                            $this->User_model->deleteUserToken($token);$this->session->set_flashdata('message','<div class="flash-data" data-flashdata="Aktivasi akun berhasil silahkan, Login!" data-judul="Aktivasi Akun" data-type="success"></div>');
+                            $this->User_Model->updateUserByEmail($email);
+                            $this->User_Model->deleteUserToken($token);$this->session->set_flashdata('message','<div class="flash-data" data-flashdata="Aktivasi akun berhasil silahkan, Login!" data-judul="Aktivasi Akun" data-type="success"></div>');
                             redirect('login');
                     }else{
-                        $this->User_model->deleteUserByEmail($email);
-                        $this->User_model->deleteUserToken($token);
+                        $this->User_Model->deleteUserByEmail($email);
+                        $this->User_Model->deleteUserToken($token);
                         $this->session->set_flashdata('message','<div class="flash-data" data-flashdata="Aktivasi akun gagal, token expired!" data-judul="Aktivasi Akun" data-type="error"></div>');
                         redirect('login');  
                     }
@@ -231,7 +231,7 @@ class Auth extends CI_Controller {
         }else{
             $email = $this->input->post('email');
             $pin = $this->input->post('pin');
-            $user = $this->User_model->getUserByEmail($email)->row_array();
+            $user = $this->User_Model->getUserByEmail($email)->row_array();
             if ($user) {
                 if ($user['status'] == 1) {
                     if ($user['pin'] == $pin) {
@@ -242,7 +242,7 @@ class Auth extends CI_Controller {
                             'waktu_buat' => time()
                         ];
 
-                        $this->User_model->setUserToken($user_token);
+                        $this->User_Model->setUserToken($user_token);
                         $this->_sendEmail($token, 'forgot');
                         $this->session->set_flashdata('message','<div class="flash-data" data-flashdata="Harap cek email Anda untuk mereset password Anda!" data-judul="Reset Akun" data-type="success"></div>');
                         redirect('forgotpassword');
@@ -268,9 +268,9 @@ class Auth extends CI_Controller {
         is_login();
         $email = $this->input->get('email');
         $token = $this->input->get('token');
-        $user = $this->User_model->getUserByEmail($email)->row_array();
+        $user = $this->User_Model->getUserByEmail($email)->row_array();
         if ($user) {
-            $user_token = $this->User_model->getUserToken($token)->row_array();
+            $user_token = $this->User_Model->getUserToken($token)->row_array();
             if ($user_token) {
                 $this->session->set_userdata('reset_email', $email);
                 $this->session->set_userdata('token', $token);
@@ -310,8 +310,8 @@ class Auth extends CI_Controller {
             $email = $this->session->userdata('reset_email');
             $token = $this->session->userdata('token');
 
-            $this->User_model->updatePasswordUserByEmail($email, $password);
-            $this->User_model->deleteUserToken($token);
+            $this->User_Model->updatePasswordUserByEmail($email, $password);
+            $this->User_Model->deleteUserToken($token);
             $this->session->unset_userdata('reset_email');
             $this->session->unset_userdata('token');
             $this->session->set_flashdata('message','<div class="flash-data" data-flashdata="Password berhasil diubah!" data-judul="Reset Akun" data-type="success"></div>');
@@ -321,7 +321,7 @@ class Auth extends CI_Controller {
 
     public function logout()
     {
-        $this->User_model->updateUserOffline($this->session->userdata('id_user'));
+        $this->User_Model->updateUserOffline($this->session->userdata('id_user'));
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('id_user');
         $this->session->unset_userdata('id_akses');

@@ -21,12 +21,12 @@ class Landing_Home extends CI_Controller {
 	public function index()
 	{
 		$data['judul'] = 'SIPetani';
-		$data['harga'] = $this->Transaksi_model->getHarga()->result_array();
-		$data['pengunjung'] = $this->Transaksi_model->getPengunjungLimit(1)->result_array();
+		$data['harga'] = $this->Transaksi_Model->getHarga()->result_array();
+		$data['pengunjung'] = $this->Transaksi_Model->getPengunjungLimit(1)->result_array();
 
 		if (session()) {
-			$data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
-			$data['cek_0'] = $this->Transaksi_model->getPemesananStatusbayar($this->session->userdata('email'),0)->num_rows();
+			$data['user'] = $this->User_Model->getUserByEmail($this->session->userdata('email'))->row_array();
+			$data['cek_0'] = $this->Transaksi_Model->getPemesananStatusbayar($this->session->userdata('email'),0)->num_rows();
 		}
 
 		// validasi Detail Pembayaran
@@ -55,7 +55,7 @@ class Landing_Home extends CI_Controller {
 		is_not_login();
 		$data['judul'] = 'Edit Profile SIPetani';
 		if (session()) {
-			$data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
+			$data['user'] = $this->User_Model->getUserByEmail($this->session->userdata('email'))->row_array();
 		}
 
 		$this->form_validation->set_rules('nama', 'Nama', 'trim|required',[
@@ -78,7 +78,7 @@ class Landing_Home extends CI_Controller {
 			$this->load->view('landing_home/editProfile',$data);
 			$this->load->view('templates/footer');
 		}else{
-			$this->User_model->updateUserProfileByEmail($this->input->post(), $data['user']['foto']);
+			$this->User_Model->updateUserProfileByEmail($this->input->post(), $data['user']['foto']);
 			$this->session->set_flashdata('message','<div class="flash-data" data-flashdata="Edit profile berhasil!" data-judul="Edit Akun '.$data['user']['nama'].'" data-type="success"></div>');
        		redirect('landing_home/editprofile');
 		}
@@ -97,10 +97,10 @@ class Landing_Home extends CI_Controller {
 			// cek apakah sudah login
 			if (session()) {
 					
-				$data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
+				$data['user'] = $this->User_Model->getUserByEmail($this->session->userdata('email'))->row_array();
 
 				// cek apakah memiliki tanggungan
-				$cekstatuspembayaran = $this->Transaksi_model->getPemesananStatusbayar($this->session->userdata('email'),0)->num_rows();
+				$cekstatuspembayaran = $this->Transaksi_Model->getPemesananStatusbayar($this->session->userdata('email'),0)->num_rows();
 				if ($cekstatuspembayaran > 0) {
 					$this->session->set_flashdata('message','<div class="flash-data" data-flashdata="Anda masih memiliki tanggungan, harap unggah bukti pembayaran" data-judul="Pemesanan Tiket" data-type="warning"></div>');
 			  		redirect('landing_home/#pemesanan');
@@ -163,13 +163,13 @@ class Landing_Home extends CI_Controller {
 						'id_user' => $data['user']['id_user'],
 						'qrcode' => ''
 					];
-					$this->Transaksi_model->setPemesananTiket($data_pemesan);
+					$this->Transaksi_Model->setPemesananTiket($data_pemesan);
 					
 					
 					//QrCode
-					$pemesan = $this->Transaksi_model->getPemesananTiketLimit(1,$this->session->userdata('id_user'))->row_array();
+					$pemesan = $this->Transaksi_Model->getPemesananTiketLimit(1,$this->session->userdata('id_user'))->row_array();
 					$this->fungsi->qrcode($pemesan['id_pemesanan'].'/'.$pemesan['jumlah_tiket'],'qrcode-'.$pemesan['id_pemesanan']);
-					$this->Transaksi_model->updatePemesananTiket('qrcode-'.$pemesan['id_pemesanan'].'.png',$pemesan['id_pemesanan']);
+					$this->Transaksi_Model->updatePemesananTiket('qrcode-'.$pemesan['id_pemesanan'].'.png',$pemesan['id_pemesanan']);
 
 
 					$this->session->unset_userdata('tgl');
@@ -195,19 +195,19 @@ class Landing_Home extends CI_Controller {
 		is_not_login();
 		
 		// cek apakah memiliki pesananan baru atau tidak
-		if ($this->Transaksi_model->getPemesananStatusbayar($this->session->userdata('email'),0)->num_rows() == NULL) {
+		if ($this->Transaksi_Model->getPemesananStatusbayar($this->session->userdata('email'),0)->num_rows() == NULL) {
 			$this->session->set_flashdata('message','<div class="flash-data" data-flashdata="Anda tidak memiliki pesanan, silahkan isi form pemesanan tiket!" data-judul="Pemesanan Tiket" data-type="warning"></div>');
 			redirect('landing_home/#pemesanan');
 		}
 
-		$data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
+		$data['user'] = $this->User_Model->getUserByEmail($this->session->userdata('email'))->row_array();
 		$data['judul'] = 'SIPetani-Detail Pemesanan';
-		$data['pemesan'] = $this->Transaksi_model->getTransaksiByEmail($this->session->userdata('email'), 0)->row_array();
+		$data['pemesan'] = $this->Transaksi_Model->getTransaksiByEmail($this->session->userdata('email'), 0)->row_array();
 
 		// jika tombol upload di tekan
 		if ($this->input->post(`submit_bukti`)) {
 
-			$this->Transaksi_model->updateTransaksiUploadBukti($data['user']['id_user'],$data['pemesan']['bukti_pembayaran'],$this->input->post());
+			$this->Transaksi_Model->updateTransaksiUploadBukti($data['user']['id_user'],$data['pemesan']['bukti_pembayaran'],$this->input->post());
 			
 			$this->session->set_flashdata('message','<div class="flash-data" data-flashdata="Anda berhasil upload bukti pembayaran, silahkan tunggu konfirmasi dari Admin, Anda dapat upload bukti pembayaran kembali selama pesanan Anda belum dikonfirmasi!" data-judul="Pemesanan Tiket" data-type="info"></div>');
 			redirect('detail_pemesanan');
@@ -226,8 +226,8 @@ class Landing_Home extends CI_Controller {
 		is_not_login();
 
 		$data['judul'] = 'SIPetani-Tiket';
-		$data['user'] = $this->User_model->getUserByEmail($this->session->userdata('email'))->row_array();
-		$data['tiket'] = $this->Transaksi_model->getPemesananStatusbayar($this->session->userdata('email'),1)->result_array();
+		$data['user'] = $this->User_Model->getUserByEmail($this->session->userdata('email'))->row_array();
+		$data['tiket'] = $this->Transaksi_Model->getPemesananStatusbayar($this->session->userdata('email'),1)->result_array();
 
 		$this->load->view('templates/header',$data);
 		$this->load->view('landing_home/tiket',$data);
@@ -238,10 +238,10 @@ class Landing_Home extends CI_Controller {
 	{
 		is_not_login();
 		$data['judul'] = 'SIPetani-Print Tiket';
-		$data['tiket'] = $this->Transaksi_model->getPemesananById($id)->row_array();
+		$data['tiket'] = $this->Transaksi_Model->getPemesananById($id)->row_array();
 		$html = $this->load->view('landing_home/printtiket', $data, TRUE);
 		$this->fungsi->Pdf($html,'Tiket-'.$data['tiket']['id_pemesanan'],'landscape',array(0,0,345,460));	
-		$this->Transaksi_model->updateStatusCetakById($data['tiket']['id_pemesanan'],1);
+		$this->Transaksi_Model->updateStatusCetakById($data['tiket']['id_pemesanan'],1);
 	}
 
 }

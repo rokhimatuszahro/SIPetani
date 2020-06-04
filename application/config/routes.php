@@ -53,32 +53,48 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // $route['404_override'] = '';
 // $route['translate_uri_dashes'] = FALSE;
 
-$route['default_controller'] = 'landing_home';
+$route['default_controller'] = 'Landing_Home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+
 // autentifikasi
-$route['login'] = 'auth/login';
-$route['registration'] = 'auth/registration';
-$route['forgotpassword'] = 'auth/forgotpassword';
-$route['changepassword'] = 'auth/changepassword';
-$route['logout'] = 'auth/logout';
+$route['login'] = 'Auth/login';
+$route['registration'] = 'Auth/registration';
+$route['forgotpassword'] = 'Auth/forgotPassword';
+$route['changepassword'] = 'Auth/changePassword';
+$route['logout'] = 'Auth/logout';
+
 
 // admin
-$route['dashboard'] = 'admin/dashboard';
-$route['pemesanan'] = 'admin/pemesanan';
-$route['harga'] = 'admin/harga';
-$route['pengunjung'] = 'admin/pengunjung';
-$route['konfirmasi'] = 'admin/konfirmasi';
+$route['dashboard'] = 'Admin/dashboard';
+$route['pemesanan'] = 'Admin/pemesanan';
+$route['harga'] = 'Admin/harga';
+$route['pengunjung'] = 'Admin/pengunjung';
+$route['konfirmasi'] = 'Admin/konfirmasi';
 
-$route['tambahpengunjung'] = 'admin/tambahpengunjung';
-$route['tambahharga'] = 'admin/tambahharga';
-$route['akunadmin'] = 'admin/akunadmin';
-$route['profileadmin'] = 'admin/profileadmin';
+$route['tambahpengunjung'] = 'Admin/tambahPengunjung';
+$route['tambahharga'] = 'Admin/tambahHarga';
+$route['akunadmin'] = 'Admin/akunAdmin';
+$route['profileadmin'] = 'Admin/profileAdmin';
 
 
 // user
-$route['detail_pembayaran'] = 'landing_home/detail_pembayaran';
-$route['detail_pemesanan'] = 'landing_home/detail_pemesanan';
-$route['tiket'] = 'landing_home/tiket';
-$route['editprofile'] = 'landing_home/editprofile';
+$route['detail_pembayaran'] = 'Landing_Home/detail_Pembayaran';
+$route['detail_pemesanan'] = 'Landing_Home/detail_Pemesanan';
+$route['tiket'] = 'Landing_Home/tiket';
+$route['editprofile'] = 'Landing_Home/editProfile';
+
+
+// Mobile
+$route['apiregistrasi'] = 'ApiMobile/apiRegistrasi';
+$route['apilogin'] = 'ApiMobile/apiLogin';
+$route['apilogout'] = 'ApiMobile/apiLogout';
+$route['apiresetakun'] = 'ApiMobile/apiResetAkun';
+$route['apireset'] = 'ApiMobile/apiReset';
+$route['apipemesanan'] = 'ApiMobile/apiPemesanan';
+$route['apidetailpemesanan'] = 'ApiMobile/apiDetailPemesanan';
+$route['apiuploadbukti'] = 'ApiMobile/apiUploadBukti';
+$route['apiprofile'] = 'ApiMobile/apiProfile';
+$route['apieditprofile'] = 'ApiMobile/apiEditProfile';
+$route['apitiket'] = 'ApiMobile/apiTiket';

@@ -17,14 +17,10 @@ class Transaksi_model extends CI_Model {
         return $this->db->get('pemesanan');
     }
 
-
-
     public function getHarga()
     {
         return $this->db->get('harga');
     }
-
-
 
     public function getPengunjungLimit($limit)
     {
@@ -32,8 +28,6 @@ class Transaksi_model extends CI_Model {
         $this->db->limit($limit);
         return $this->db->get('pengunjung');
     }
-
-
 
     public function getDataRekap($waktu, $waktu_pemesanan)
     {
