@@ -323,7 +323,7 @@ class ApiMobile extends CI_Controller {
                     'success' => '1',
                     'message' => 'Berhasil load Profile',
                     'profile' => $profile,
-                    'foto' => 'http://192.168.43.178/sipetani/assets/img/profile/'.$profile['foto']
+                    'foto' => '/assets/img/profile/'.$profile['foto']
                 ];
             }else{
                 $data = [
