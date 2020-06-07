@@ -52,7 +52,7 @@
                     <td><?= $t['nama_pemesan']; ?></td>
                     <td><?= $t['tanggal_pemesanan']; ?></td>
                     <td><?= $t['total']; ?></td>
-                    <td><a href="<?= base_url('landing_home/print/'.$t['id_pemesanan']); ?>" target="_blank"><i class="fas fa-print"></i></a></td>
+                    <td><a href="<?= base_url('Landing_Home/print/'.$t['id_pemesanan']); ?>" target="_blank"><i class="fas fa-print"></i></a></td>
                 </tr>
                 <?php endforeach ?>
               

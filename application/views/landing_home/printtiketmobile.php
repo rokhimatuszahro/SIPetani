@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="<?= base_url('assets/img/logo/logo.PNG'); ?>" rel='shortcut icon'>
+    <link href="<?= base_url('assets/img/logo/logo.png'); ?>" rel='shortcut icon'>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -26,7 +26,7 @@
                 text-shadow: 1px 1px 3px black !important;
             }
             .bg-gambar{
-                background-image: url("<?= base_url('assets/img/print/background2.PNG'); ?>");
+                background-image: url("<?= base_url('assets/img/print/background2.png'); ?>");
                 background-repeat: no-repeat;
                 background-size:cover;
                 background-position: -65px 0;
@@ -59,7 +59,7 @@
     <?php else : ?>
     <div class="card w-75 mx-auto mt-5 rounded-top bg-gambar border-secondary">
         <div class="bg-dark py-2 pl-2 rounded-top">
-            <img src="<?= base_url('assets/img/logo/logo.PNG'); ?>" width="30" height="30" alt="">
+            <img src="<?= base_url('assets/img/logo/logo.png'); ?>" width="30" height="30" alt="">
             <h1 class="text-white d-inline">Tiket Wisata Taman Botani</h1>
         </div>
         <div class="px-2 pt-2">

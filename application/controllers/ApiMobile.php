@@ -11,38 +11,37 @@ class ApiMobile extends CI_Controller {
         $pin = $this->input->post('pin');
         $jenkel = $this->input->post('jenkel');
 
-        if (!empty($this->input->post())) {
-            $datainsert = [
-                'nama' => htmlspecialchars($nama, true),
-                'jenkel' => $jenkel,
-                'email' => htmlspecialchars($email, true),
-                'password' => password_hash($password, PASSWORD_DEFAULT),
-                'pin' => htmlspecialchars($pin, true),
-                'id_akses' => 1,
-                'foto' => 'default.jpg',
-                'status_login' => 0,
-                'status' => 0
-            ];
-    
+        if (!empty($this->input->post())) { 
             $user = $this->User_Model->getUserByEmail($email)->num_rows();
     
-            if ($user <= 0) {
+            if ($user == 0) {    
+                $datainsert = [
+                    'nama' => htmlspecialchars($nama, true),
+                    'jenkel' => $jenkel,
+                    'email' => htmlspecialchars($email, true),
+                    'password' => password_hash($password, PASSWORD_DEFAULT),
+                    'pin' => htmlspecialchars($pin, true),
+                    'id_akses' => 1,
+                    'foto' => 'default.jpg',
+                    'status_login' => 0,
+                    'status' => 0
+                ];   
                 $token = base64_encode(random_bytes(32));
+
                 $user_token = [
                     'email' => $email,
                     'token' => $token,
                     'waktu_buat' => time()
                 ];
-                $kirim = $this->_sendEmail($token);
-                if ($kirim == TRUE) {
-                    $this->User_Model->setUserToken($user_token);
-                    $this->User_Model->setRegistrasiMobile($datainsert);
-                    $data = [
-                        'success' => '1',
-                        'title' => 'Berhasil Registrasi Akun',
-                        'message' => 'Berhasil Registrasi, Silahkan Cek Email Anda Untuk Aktivasi Akun Anda'
-                    ];
-                }
+                $this->_sendEmail($token);
+                $this->User_Model->setUserToken($user_token);
+                $this->User_Model->setRegistrasiMobile($datainsert);
+                $data = [
+                    'success' => '1',
+                    'title' => 'Berhasil Registrasi Akun',
+                    'message' => 'Berhasil Registrasi, Silahkan Cek Email Anda Untuk Aktivasi Akun Anda'
+                ];
+                
             }else{
                 $data = [
                     'success' => '0',
@@ -232,8 +231,8 @@ class ApiMobile extends CI_Controller {
                     $this->Transaksi_Model->updatePemesananTiket('qrcode-'.$pemesan['id_pemesanan'].'.png',$pemesan['id_pemesanan']);
                     $data = [
                         'success' => '1',
-                        'title' => 'Berhasi Pesan Tiket',
-                        'message' > 'Selamat Anda Berhasil Memesan Tiket, Silahkan Unggah Bukti Pembayaran Untuk Cetak Tiket Anda'
+                        'title' => 'Berhasil Pesan Tiket',
+                        'message' => 'Selamat Anda Berhasil Memesan Tiket, Silahkan Unggah Bukti Pembayaran Untuk Cetak Tiket Anda'
                     ];
                 }else{
                     $data = [
@@ -258,7 +257,6 @@ class ApiMobile extends CI_Controller {
         
         if (!empty($id_user)) {
             $detailPemesanan = $this->Transaksi_Model->getTransaksiById($id_user,0)->row_array();
-            $detailPemesananLunas = $this->Transaksi_Model->getTransaksiById($id_user,1)->num_rows();
 
             if(!empty($detailPemesanan)) {
                 $data = [
@@ -266,16 +264,11 @@ class ApiMobile extends CI_Controller {
                     'message' => 'Berhasil Memuat Detail Pemesanan!',
                     'detail_pemesanan' => $detailPemesanan
                 ];
-            }else if($detailPemesananLunas > 0){
+            }else{
                 $data = [
                     'success' => '2',
                     'title' => 'Notifikasi',
                     'message' => 'Anda Tidak Memiliki Pesanan, Silahkan Lakukan Pemesanan Tiket!'
-                ];
-            }else{
-                $data = [
-                    'success' => '0',
-                    'message' => "Gagal Memuat Detail Pemesanan"
                 ];
             }
             echo json_encode($data);
@@ -291,10 +284,11 @@ class ApiMobile extends CI_Controller {
         if (!empty($this->input->post())) {
             $transaksi = $this->Transaksi_Model->getPemesananStatusbayar($email,0)->row_array();
 
-            $path = './assets/img/bukti_pembayaran/'.$transaksi['id_pemesanan'].".mobile.jpeg";
-
+            $img_bukti = $transaksi['id_pemesanan'].".".time().".mobile.PNG";
+            $path = './assets/img/bukti_pembayaran/'.$img_bukti;
+            
             if($transaksi){
-                $this->Transaksi_Model->updateBuktiPembayaran($id_user, $transaksi['id_pemesanan'].".mobile.jpeg");
+                $this->Transaksi_Model->updateBuktiPembayaran($id_user, $img_bukti);
                 file_put_contents($path, $foto);
                 $data = [
                     'success' => '1',
@@ -443,7 +437,7 @@ class ApiMobile extends CI_Controller {
         $data['judul'] = 'Tiket Anda';
         $data['tiket'] = $this->Transaksi_Model->getPemesananById($id_pemesanan)->row_array();
         if($data['tiket']['status_pembayaran'] == 1){
-            $tampilan = $this->load->view('landing_home/printtiketmobile', $data);
+            $tampilan = $this->load->view('landing_home/printtiketmobile2', $data);
         }else{
             $data['error'] = '
                 <div class="alert alert-danger alert-dismissible w-27 mx-auto fade show" role="alert">

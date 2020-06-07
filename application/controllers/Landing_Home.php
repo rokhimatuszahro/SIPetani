@@ -75,12 +75,12 @@ class Landing_Home extends CI_Controller {
 		if ($this->form_validation->run() == FALSE)
         {
 			$this->load->view('templates/header',$data);
-			$this->load->view('landing_home/editProfile',$data);
+			$this->load->view('landing_home/editprofile',$data);
 			$this->load->view('templates/footer');
 		}else{
 			$this->User_Model->updateUserProfileByEmail($this->input->post(), $data['user']['foto']);
 			$this->session->set_flashdata('message','<div class="flash-data" data-flashdata="Edit profile berhasil!" data-judul="Edit Akun '.$data['user']['nama'].'" data-type="success"></div>');
-       		redirect('landing_home/editprofile');
+       		redirect('editprofile');
 		}
 	}
 
@@ -205,7 +205,7 @@ class Landing_Home extends CI_Controller {
 		$data['pemesan'] = $this->Transaksi_Model->getTransaksiByEmail($this->session->userdata('email'), 0)->row_array();
 
 		// jika tombol upload di tekan
-		if ($this->input->post(`submit_bukti`)) {
+		if ($this->input->post()) {
 
 			$this->Transaksi_Model->updateTransaksiUploadBukti($data['user']['id_user'],$data['pemesan']['bukti_pembayaran'],$this->input->post());
 			

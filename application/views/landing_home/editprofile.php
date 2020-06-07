@@ -53,7 +53,7 @@
                     <h1 class="h4 text-gray-900 mb-4">Edit <span class="text-primary font-weight-bold">Profile</span></h1>
                     <?= $this->session->flashdata('message'); ?>
                   </div>
-                  <form class="user" method="post" action="<?= base_url('landing_home/editprofile'); ?>" enctype="multipart/form-data">
+                  <form class="user" method="post" action="<?= base_url('editprofile'); ?>" enctype="multipart/form-data">
                     <div class="form-group">
                       <input type="text" class="form-control form-control-user text-center" name="email" value="<?= $user['email']; ?>" id="nama" placeholder="Nama Pemesan" readonly>
                     </div>

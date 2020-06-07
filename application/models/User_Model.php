@@ -144,7 +144,7 @@ class User_model extends CI_Model {
             if($oldfoto != 'default.jpg'){
                 unlink(FCPATH.'assets/img/profile/'.$oldfoto);
             }
-            $nama_imgbaru = $id_user.".".time().".profile.mobile.jpeg";
+            $nama_imgbaru = $id_user.".".time().".profile.mobile.PNG";
             $path = './assets/img/profile/'.$nama_imgbaru;
             $this->db->set('foto', $nama_imgbaru);
             file_put_contents($path, $foto);
