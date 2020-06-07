@@ -23,7 +23,7 @@ class Auth extends CI_Controller {
         {
             $data['judul'] = 'SIPetani-Login';
             $this->load->view('templates/header',$data);
-            $this->load->view('auth/login.php');
+            $this->load->view('auth/login');
             $this->load->view('templates/footer');
         }else{
             $this->_login();
@@ -75,7 +75,7 @@ class Auth extends CI_Controller {
         {
             $data['judul'] = 'SIPetani-New Account';
             $this->load->view('templates/header',$data);
-            $this->load->view('auth/registration.php');
+            $this->load->view('auth/registration');
             $this->load->view('templates/footer');
         }else{
             $data = $this->input->post();
@@ -226,7 +226,7 @@ class Auth extends CI_Controller {
         if ($this->form_validation->run() == false) {
             $data['judul'] = 'SIPetani-Forgot Password';
             $this->load->view('templates/header',$data);
-            $this->load->view('auth/forgotpassword.php');
+            $this->load->view('auth/forgotpassword');
             $this->load->view('templates/footer');
         }else{
             $email = $this->input->post('email');

@@ -31,9 +31,9 @@
   }
 
   .hero .js-fullheight.gambar1{
-      background: url('http://localhost/sipetani/assets/img/home/DSC_0312-1.JPG') !important;
+      background: url('http://localhost/sipetani/assets/img/home/DSC_0312-1.jpg') !important;
       background-repeat: no-repeat !important;
-      background-position: -85px 0 !important;
+      background-position: -70px 0 !important;
   }
 
   /*service*/
@@ -85,11 +85,11 @@
 
 /*Landing Page Img*/
 .hero .js-fullheight.gambar1 {
-  background-image: url('http://localhost/sipetani/assets/img/home/1.JPG');
+  background-image: url('http://localhost/sipetani/assets/img/home/1.jpg');
 }
 
 .hero .js-fullheight.gambar2 {
-  background-image: url('http://localhost/sipetani/assets/img/home/3.JPG');
+  background-image: url('http://localhost/sipetani/assets/img/home/3.jpg');
 }
 
 /*bg_SVG*/
