@@ -4,10 +4,12 @@
 	<title><?= $judul; ?></title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link href="assets/img/logo/logo.png" rel='shortcut icon'>
+	<link href="<?= base_url('assets/img/logo/logo.png'); ?>" rel='shortcut icon'>
 	<style>
 		.gambar{
-			background-image: url(assets/img/print/background.png);
+			width:100%;
+			height:100%;
+			background-image: url('<?= base_url('assets/img/print/background.png'); ?>');
 			background-position: -55px -30px;
 		}
 		table:nth-child(2){
@@ -46,7 +48,7 @@
 			content: '';
 			display: block;
 			width: 100%;
-			height: 240px;
+			height: 100%;
 			background-color: rgba(0,0,0,0.3);
 			position: absolute;
 			top: 0;
@@ -56,10 +58,10 @@
 </head>
 <body>
 	<div class="gambar">    
-		<div class="content">
+		<div class="content">	
 			<table>
 				<tr>
-					<td><img src="assets/img/logo/logo.png" height="90" width="90"></td>
+					<td><img src="<?= base_url('assets/img/logo/logo.png'); ?>" height="90" width="90"></td>
 					<td colspan="3"><h1>Taman Botani</h1></td>
 					<td></td>
 					<td></td>
@@ -72,7 +74,7 @@
 					<td><b>Nama Pemesan</b></td>
 					<td><b>:</b></td>
 					<td><b><?= $tiket["nama_pemesan"]; ?></b></td>
-					<td rowspan="4"><img class="qrcode" src="assets/img/qrcode/<?= $tiket['qrcode']; ?>"></td>
+					<td rowspan="4"><img class="qrcode" src="<?= base_url('assets/img/qrcode/'.$tiket['qrcode']); ?>"></td>
 				</tr>
 				<tr>
 					<td><b>Alamat</b></td>

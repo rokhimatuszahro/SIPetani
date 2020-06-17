@@ -30,7 +30,6 @@
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user text-center" name="password2" id="password"
                         placeholder="Ulang Password Baru">
-                        <?php echo form_error('password2','<p class="text-danger-bs small ml-2">','</p>'); ?>
                     </div>
                     <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold mt-4">
                       Ubah Sekarang

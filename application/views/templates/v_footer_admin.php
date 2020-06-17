@@ -56,6 +56,9 @@
   <!-- Demo scripts for this page-->
   <script src="<?= base_url('assets/js/demo/datatables-demo.js'); ?>"></script>
 
+  <!-- Sweet Alert2 and my script -->
+  <script src="<?= base_url('assets/js/sweetalert2.all.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/script.js'); ?>"></script>
 
 <script>
 // Set new default font family and font color to mimic Bootstrap's default styling

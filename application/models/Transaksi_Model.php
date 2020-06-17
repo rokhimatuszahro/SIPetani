@@ -17,14 +17,10 @@ class Transaksi_model extends CI_Model {
         return $this->db->get('pemesanan');
     }
 
-
-
     public function getHarga()
     {
         return $this->db->get('harga');
     }
-
-
 
     public function getPengunjungLimit($limit)
     {
@@ -32,8 +28,6 @@ class Transaksi_model extends CI_Model {
         $this->db->limit($limit);
         return $this->db->get('pengunjung');
     }
-
-
 
     public function getDataRekap($waktu, $waktu_pemesanan)
     {
@@ -59,7 +53,7 @@ class Transaksi_model extends CI_Model {
         $this->db->select('*');
         $this->db->from('pemesanan');
         $this->db->join('users', 'users.id_user = pemesanan.id_user');
-        $this->db->where('pemesanan.bukti_pembayaran !=', 0);
+        $this->db->where('pemesanan.bukti_pembayaran !=', NULL);
         $this->db->order_by('id_pemesanan', 'DESC');
         return $this->db->get();
     }
@@ -68,7 +62,7 @@ class Transaksi_model extends CI_Model {
     {
         if ($id == 'all') {
             $this->db->set('status_pembayaran', $status);
-            $this->db->where('bukti_pembayaran !=', 0);
+            $this->db->where('bukti_pembayaran !=', NULL);
             $this->db->update('pemesanan');
         }else{
             $this->db->set('status_pembayaran', $status);
@@ -169,5 +163,72 @@ class Transaksi_model extends CI_Model {
         $this->db->where('id_user', $id_user); 
         $this->db->where('status_pembayaran', 0); 
         $this->db->update('pemesanan'); 
+    }
+
+    public function getPengunjung()
+    {
+        return $this->db->get('pengunjung');
+    }
+
+    public function getPengunjungById($id)
+    {
+        $this->db->where('id_pengunjung', $id);
+        return $this->db->get('pengunjung');
+    }
+
+    public function setPengunjung($data)
+    {
+        $datainsert = [
+            'tgl_pengunjung' => $data['tanggal'],
+            'jum_pengunjung' => htmlspecialchars($data['jumlah_pengunjung'],true)
+        ];
+        $this->db->insert('pengunjung',$datainsert);
+    }
+
+    public function updatePengunjung($data,$id)
+    {
+        $data_pengunjung = [
+            'tgl_pengunjung' => $data['tanggal'],
+            'jum_pengunjung' => htmlspecialchars($data['jumlah_pengunjung'],true)
+        ];
+        $this->db->set($data_pengunjung);
+        $this->db->where('id_pengunjung', $id);
+        $this->db->update('pengunjung');
+    }
+
+    public function deletePengunjungById($id)
+    {
+        $this->db->delete('pengunjung', ['id_pengunjung' => $id]);
+    }
+
+    public function getHargaById($id)
+    {
+        $this->db->where('id_harga', $id);
+        return $this->db->get('harga');
+    }
+
+    public function setHarga($data)
+    {
+        $datainsert = [
+            'hari' => htmlspecialchars($data['hari'],true),
+            'harga' => htmlspecialchars($data['harga'],true)
+        ];
+        $this->db->insert('harga',$datainsert);
+    }
+
+    public function updateHarga($data,$id)
+    {
+        $data_harga = [
+            'hari' => htmlspecialchars($data['hari'],true),
+            'harga' => htmlspecialchars($data['harga'],true)
+        ];
+        $this->db->set($data_harga);
+        $this->db->where('id_harga', $id);
+        $this->db->update('harga');
+    }
+
+    public function deletehargaById($id)
+    {
+        $this->db->delete('harga', ['id_harga' => $id]);
     }
 }

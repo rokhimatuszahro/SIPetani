@@ -2,7 +2,7 @@
 
 class User_model extends CI_Model {
 
-    
+    // wEB    
     public function getUserByEmail($data)
     {
          return $query = $this->db->get_where('users', ['email' => $data]);
@@ -65,13 +65,10 @@ class User_model extends CI_Model {
         $this->db->update('users');
     }
 
-
     public function getUser()
     {
         return $this->db->get('users');
-    }
-
-    
+    }    
 
     public function deleteUserById($id)
     {
@@ -123,7 +120,6 @@ class User_model extends CI_Model {
         $this->db->update('users');
     }
 
-
     public function updatePasswordUserByEmail($email,$password)
     {
         $this->db->set('password', $password);
@@ -131,6 +127,8 @@ class User_model extends CI_Model {
         $this->db->update('users');
     }
 
+
+    // Mobile Android
     public function setRegistrasiMobile($data)
     {
         $this->db->insert('users', $data);
@@ -146,7 +144,7 @@ class User_model extends CI_Model {
             if($oldfoto != 'default.jpg'){
                 unlink(FCPATH.'assets/img/profile/'.$oldfoto);
             }
-            $nama_imgbaru = $id_user.".".time().".profile.mobile.jpeg";
+            $nama_imgbaru = $id_user.".".time().".profile.mobile.PNG";
             $path = './assets/img/profile/'.$nama_imgbaru;
             $this->db->set('foto', $nama_imgbaru);
             file_put_contents($path, $foto);

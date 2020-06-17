@@ -42,7 +42,7 @@
                     <h1 class="h4 text-gray-900 mb-4">Edit <span class="text-primary font-weight-bold">Profile</span></h1>
                     
                     <!-- Menampilkan Flashdata yg dibuat dan dikirim dari controller -->
-                    <?= $this->session->flashdata('message'); ?>  
+                    <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>" data-judul="Profil Admin" data-type="success"></div>
                   </div>
 
                     <!-- Form dengan method post yg mengirim data ke method profiladmin dengan enctype multipart -->

@@ -4,10 +4,13 @@
 	   <title><?= $judul; ?></title>
 	   <meta charset="utf-8">
 	   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	   <link href="<?= base_url('assets/img/logo/logo.PNG'); ?>" rel='shortcut icon'>
+	   <link href="<?= base_url('assets/img/logo/logo.png'); ?>" rel='shortcut icon'>
 	    
 		<!-- font -->
 	   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900" rel="stylesheet">
+
+       <!-- Animated -->
+       <link rel="stylesheet" href="<?= base_url('assets/css/animate.min.css'); ?>">
 	    	
 	   <!-- MY CSS -->
 	   <link rel="stylesheet" href="<?= base_url('assets/css/style.css'); ?>">
